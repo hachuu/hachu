@@ -22,8 +22,7 @@
 
 * Javascript
 * Angular
-* TypeScript
-* TypeScript
+* Typescript
 * React
 * JAVA
 * SQL
