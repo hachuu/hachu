@@ -1,12 +1,36 @@
-# hachu.github.io
+# Who am I?
 
-# Name: hachu
-# Interest thing
+## Name: Song HaYoung
+
+## Gender: female
+
+## NickName: hachuu💋
+
+## Interest thing
+
+- coding
+- searching & sharing
+- studying English
+- traveling
+- listening music
+- watching movie
+
+
 ## Web Development
-* Angular
+
 * Javascript
+
+* Angular
+
 * TypeScript
-* SPA
 
+* React
 
+* JAVA
+
+* SQL
+
+  
+
+![Github Stats](https://github-readme-stats.vercel.app/api/top-langs?username=hachuu&layout=compact)
 ![Github Stats](https://github-readme-stats.vercel.app/api?username=hachuu&show_icons=true)
