@@ -23,6 +23,7 @@
 * Javascript
 * Angular
 * TypeScript
+* TypeScript
 * React
 * JAVA
 * SQL
@@ -60,6 +61,7 @@
 - [예매 https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do](https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do)
   </div>
 </details>
+
 
 ![Github Stats](https://github-readme-stats.vercel.app/api/top-langs?username=hachuu&layout=compact)
 ![Github Stats](https://github-readme-stats.vercel.app/api?username=hachuu&show_icons=true)
