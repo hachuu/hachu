@@ -26,6 +26,8 @@
 * React
 * JAVA
 * SQL
+* HTML/CSS
+* Spring
 
 ## Project
 <details>
