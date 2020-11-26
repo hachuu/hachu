@@ -57,7 +57,8 @@
 - [예매 https://flyasiana.com/I/KR/KO/RevenueRegistTravel.do](https://flyasiana.com/I/KR/KO/RevenueRegistTravel.do)
 
 3. 제주항공
-- [예매 https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do](https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do)
+- [예매 PC형 https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do](https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do)
+- [예매 Mobile형 https://www.jejuair.net/jejuair/kr/mobile/booking/intAvail.do](https://www.jejuair.net/jejuair/kr/mobile/booking/intAvail.do)
   </div>
 </details>
 
