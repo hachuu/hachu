@@ -12,6 +12,7 @@
 
 - coding
 - searching & sharing
+- keeping my journal/diary
 - studying English
 - traveling
 - listening music
