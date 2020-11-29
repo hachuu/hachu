@@ -30,7 +30,7 @@
 * Spring
 
 ## Project
-<details>
+<details open>
   <summary>프로젝트 이력 보기</summary>
   <div markdown="1">
     
