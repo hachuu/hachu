@@ -24,11 +24,12 @@
 * Javascript
 * Angular
 * Typescript
-* React
 * JAVA
 * SQL
 * HTML/CSS
 * Spring
+* React
+* Nodejs
 
 ## Project
 <details open>
@@ -37,7 +38,7 @@
     
 | 기간              | 내용                                                         |
 | ----------------- | ------------------------------------------------------------ |
-| 2019/09 ~ 2020/01 | 대한항공 온라인 개편 (현재) - Angular8 SPA Front/End 개발,  W3C 웹접근성       |
+| 2019/09 ~ 2020/01 | 대한항공 온라인 개편 (현재) - Angular8 SPA, typeScript Front/End 개발,  W3C 웹접근성       |
 | 2019/02 ~ 2019/09 | 제주항공 FareFamily & New Class - javascript, Front/End 개발 |
 | 2018/08 ~ 2019/02 | 아시아나항공 상용 우대 프로젝트 - Spring, Maven, javascript, Java, 오라클 SQL |
 | 2017/06 ~ 2018/08 | 아시아나항공 온라인 개편 - Spring, Maven, javascript, Java, 오라클 SQL |
