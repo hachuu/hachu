@@ -38,7 +38,7 @@
     
 | 기간              | 내용                                                         |
 | ----------------- | ------------------------------------------------------------ |
-| 2019/09 ~ 2020/01 | 대한항공 온라인 개편 (현재) - Angular8 SPA, typeScript Front/End 개발,  W3C 웹접근성       |
+| 2019/09 ~ 2020/12 | 대한항공 온라인 개편 - Angular8 SPA, typeScript Front/End 개발,  W3C 웹접근성       |
 | 2019/02 ~ 2019/09 | 제주항공 FareFamily & New Class - javascript, Front/End 개발 |
 | 2018/08 ~ 2019/02 | 아시아나항공 상용 우대 프로젝트 - Spring, Maven, javascript, Java, 오라클 SQL |
 | 2017/06 ~ 2018/08 | 아시아나항공 온라인 개편 - Spring, Maven, javascript, Java, 오라클 SQL |
@@ -51,8 +51,8 @@
 ### 주요 활동 이력
 국내 메이저 항공사 홈페이지 예매 시스템 개발
 1. 대한항공
-- To-Be [메인 https://www.koreanair.com](https://www.koreanair.com/)
-- To-Be [예매 https://www.koreanair.com/booking/search](https://www.koreanair.com/booking/search)
+- [메인 https://www.koreanair.com](https://www.koreanair.com/)
+- [예매 https://www.koreanair.com/booking/search](https://www.koreanair.com/booking/search)
 
 2. 아시아나항공
 - [메인 https://flyasiana.com/C/KR/KO/index](https://flyasiana.com/C/KR/KO/index)
