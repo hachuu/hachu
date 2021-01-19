@@ -64,6 +64,7 @@
   </div>
 </details>
 
-
-![Github Stats](https://github-readme-stats.vercel.app/api/top-langs?username=hachuu&layout=compact)
+![Github Stats](https://github-readme-stats.vercel.app/api/top-langs?username=hachuu&layout=compact)  
+![Metrics](https://metrics.lecoq.io/hachuu?template=classic&config.timezone=Asia%2FSeoul&config.animated=true)  
 ![Github Stats](https://github-readme-stats.vercel.app/api?username=hachuu&show_icons=true)
+
