@@ -38,6 +38,7 @@
     
 | 기간              | 내용                                                         |
 | ----------------- | ------------------------------------------------------------ |
+| 2021/01 ~ 현재 | 트레드링스 Tradlinx Front-end 리드, Angular, React 웹 솔루션 개발 |
 | 2019/09 ~ 2020/12 | 대한항공 온라인 개편 - Angular8 SPA, typeScript Front/End 개발,  W3C 웹접근성       |
 | 2019/02 ~ 2019/09 | 제주항공 FareFamily & New Class - javascript, Front/End 개발 |
 | 2018/08 ~ 2019/02 | 아시아나항공 상용 우대 프로젝트 - Spring, Maven, javascript, Java, 오라클 SQL |
@@ -49,7 +50,7 @@
 | 2015/03 ~ 2015/06 | 제주항공 중국 결제 - javascript, Java 개발                   |
 
 ### 주요 활동 이력
-국내 메이저 항공사 홈페이지 예매 시스템 개발
+## 국내 메이저 항공사 홈페이지 예매 시스템 개발
 1. 대한항공
 - [메인 https://www.koreanair.com](https://www.koreanair.com/)
 - [예매 https://www.koreanair.com/booking/search](https://www.koreanair.com/booking/search)
@@ -61,6 +62,11 @@
 3. 제주항공
 - [예매 PC형 https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do](https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do)
 - [예매 Mobile형 https://www.jejuair.net/jejuair/kr/mobile/booking/intAvail.do](https://www.jejuair.net/jejuair/kr/mobile/booking/intAvail.do)
+
+## 트레드링스 홈페이지 물류 솔루션 개발 및 유지 보수
+1. [트레드링스 홈페이지](https://www.tradlinx.com/) 
+2. [쉽고 (Shipgo)](https://shipgo.tradlinx.com/)
+
   </div>
 </details>
 
