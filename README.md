@@ -23,13 +23,14 @@
 
 * Javascript
 * Angular
+* React
 * Typescript
+* Nodejs
+* Next
 * JAVA
 * SQL
 * HTML/CSS
 * Spring
-* React
-* Nodejs
 
 ## Project
 <details open>
