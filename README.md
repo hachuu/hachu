@@ -64,7 +64,7 @@
 - [예매 PC형 https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do](https://www.jejuair.net/jejuair/kr/com/jeju/ibe/availInit.do)
 - [예매 Mobile형 https://www.jejuair.net/jejuair/kr/mobile/booking/intAvail.do](https://www.jejuair.net/jejuair/kr/mobile/booking/intAvail.do)
 
-### 트레드링스 홈페이지 물류 솔루션 개발 및 유지 보수
+### 트레드링스 홈페이지 물류 솔루션 리드 개발자
 1. [트레드링스 홈페이지](https://www.tradlinx.com/) 
 2. [쉽고 (Shipgo)](https://shipgo.tradlinx.com/)
 
