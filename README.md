@@ -14,6 +14,8 @@
 - searching & sharing
 - keeping my journal/diary
 - studying English
+- tennis
+- personal training
 - traveling
 - listening music
 - watching movie
