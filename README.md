@@ -33,8 +33,9 @@
 * SQL
 * HTML/CSS
 * Spring
+
 ## 현재 진행 중 2021/01~ing
-<details open>
+<details> <!--open-->
   <summary>프로젝트 이력 보기</summary>
   <div markdown="1">
     
