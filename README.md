@@ -10,29 +10,35 @@
 
 ## Interest thing
 
-- coding
-- searching & sharing
-- keeping my journal/diary
-- studying English
-- tennis
-- personal training
-- traveling
-- listening music
-- watching movie
+- coding 🖥
+- searching & sharing 🔍
+- keeping my journal/diary 📒
+- studying Something (english/dev/...) 📝
+- traveling ✈🚄
+- listening music 🎶
+- watching movie 🎬
+- cooking 🍳
+- tennis 🏸
+- reading 📖
 
 
 ## Web Development
 
-* Javascript
-* Angular
-* React
-* Typescript
-* Nodejs
-* Next
-* JAVA
-* SQL
-* HTML/CSS
-* Spring
+
+* ![Javascript Badge](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![Typescript Badge](https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=black) 
+* ![Angular Badge](https://img.shields.io/badge/Angular-DD0031?style=flat-square&logo=angular&logoColor=black) ![RxJS](https://img.shields.io/badge/rxjs-%23B7178C.svg?style=flat-square&logo=reactivex&logoColor=white)
+* ![React Badge](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black) ![Redux](https://img.shields.io/badge/Redux-764ABC?style=flat-square&logo=redux&logoColor=black) ![Next.js Badge](https://img.shields.io/badge/Next.js-000000?style=flat-square&logo=Next.js&logoColor=white) 
+* ![Vue Badge](https://img.shields.io/badge/vue.js-4FC08D?style=flat-square&logo=vue.js&logoColor=white)
+* ![Nodejs Badge](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=black) 
+* ![JAVA Badge](https://img.shields.io/badge/JAVA-007396?style=flat-square&logo=Java&logoColor=white) ![Spring Badge](https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=spring&logoColor=white)
+* ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=flat-square&logo=webpack&logoColor=black)
+* ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=flat-square&logo=yarn&logoColor=white)
+* ![MySQL Badge](https://img.shields.io/badge/MySQL-00000F?style=flat-square&logo=mysql&logoColor=white) 
+* ![HTML5 Badge](https://img.shields.io/badge/html5-%23E34F26.svg?style=flat-square&logo=html5&logoColor=black) ![CSS3 Badge](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=black)
+* ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=flat-square&logo=git&logoColor=white) ![Github Badge](https://img.shields.io/badge/github-%23121011.svg?style=flat-square&logo=github&logoColor=white) ![GitLab Badge](https://img.shields.io/badge/GitLab-FC6D26.svg?style=flat-square&logo=gitlab&logoColor=white)
+* ![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=flat-square&logo=azure-devops&logoColor=white)
+* ![Firebase](https://img.shields.io/badge/firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white) ![FireStore](https://img.shields.io/badge/firestore-FFCA28?style=flat-square&logo=FireStore&logoColor=white)
+* ![Svelte Badge](https://img.shields.io/badge/svelte-FF3E00.svg?style=flat-square&logo=svelte&logoColor=white) 
 
 ## 현재 진행 중 2021/01~ing
 <details> <!--open-->
@@ -113,6 +119,9 @@
 | 2016/02 ~ 2016/11 | 아시아나항공 선호좌석 유료서비스 구축 - Spring, Maven, javascript, Java, 오라클 SQL |
 | 2015/06 ~ 2016/02 | 아시아나항공 미국 WCAG 장차법 구축 - Spring, Maven, javascript, Java, 오라클 SQL, 웹접근성 |
 | 2015/03 ~ 2015/06 | 제주항공 중국 결제 - javascript, Java 개발                   |
+
+</div>
+</details>
 
 ## 주요 활동 이력
 ### 국내 메이저 항공사 홈페이지 예매 시스템 개발
