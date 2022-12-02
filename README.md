@@ -40,9 +40,9 @@
 * ![Firebase](https://img.shields.io/badge/firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white) ![FireStore](https://img.shields.io/badge/firestore-FFCA28?style=flat-square&logo=FireStore&logoColor=white)
 * ![Svelte Badge](https://img.shields.io/badge/svelte-FF3E00.svg?style=flat-square&logo=svelte&logoColor=white) 
 
-## 현재 진행 중 2021/01~ing
+## 최근 2년간 이력 2021~2022
 <details> <!--open-->
-  <summary>프로젝트 이력 보기</summary>
+  <summary>최근 프로젝트 이력 보기</summary>
   <div markdown="1">
     
 
@@ -102,6 +102,24 @@
   </div>
 </details>
 
+    
+| Title | Contents                                                         |
+| ----------------- | ------------------------------------------------------------ |
+| SEO 최적화 | 구글 analytics 관리(페이지별 이슈 처리)로 사이트 월 방문자 30만명으로 상승하는데 기여 |
+|  | sitemap 관리를 통한 사이트 유효 링크관리 페이지 유효성 90% 이상 상승 단기간마다 기존 |
+|  | legacy 소스 이해를 위한 리팩토링 작업 진행 (불필요한 script 삭제, 무거운 library 제거) |
+|  | framework 버전 업 진행 및 라이브러리 변경 작업을 통한 최적화 작업 |
+|  | ios, window 크로스 브라우징 테스트 |
+| 물류 IT의 신규 솔루션 협업 툴 Zimgo 개발 및 FE 리드 | 프로젝트 기술 spec : Angular14, rxjs, d3, ag-grid, agm(googleMap) |
+|  | FE 프로젝트 기획 및 구조 설계 및 개발을 production 수준으로 할 수 있음 |
+|  | Framework, library 스터디를 통한 기능 기획 및 구현 가능 |
+|  | 혼자 FE파트를 담당하다가 현재 3명의 후임 개발자들과 함께 FE파트를 꾸리고 있으며 파트리더로 활동하고 있음 |
+|  | 기획자, 디자이너, 백엔드 개발자와 데일리 미팅을 진행하여 프로젝트에 대한 관심과 파트 별 이슈 공유에 노력함 |
+| B2B 웹 서비스 개발, 물류 플랫폼 FE 리드 및 개발자 | Angular14, React17, Next11 Git, Azure, SCSS, SEO, 웹접근성, 통합 로그인 구축, Azure CI/CD 배포 관리 |
+|  | 용량 차지를 많이 하거나 사용성에 좋지 않은 library를 걷어내고 독자적인 element를 만드는데 기여함 |
+|  | 사용량이 많은 주요 페이지에 사용성을 높이기 위해 웹접근성 도입 |
+|  | B2B api 개발자 기능 테스트를 위한 테스트 페이지 개발 및 배포로 빠른 에러 대응 가능 |
+
 ## 과거 Project
 <details>
   <summary>과거 프로젝트 이력 보기</summary>
@@ -109,7 +127,7 @@
     
 | 기간              | 내용                                                         |
 | ----------------- | ------------------------------------------------------------ |
-| 2021/01 ~ 현재 | 트레드링스 Tradlinx Front-end 리드, Angular, React 웹 솔루션 개발 |
+| 2021/01 ~ 2022/10 | 트레드링스 Tradlinx Front-end 리드, Angular, React 웹 솔루션 개발 |
 | 2019/09 ~ 2020/12 | 대한항공 온라인 개편 - Angular8 SPA, typeScript Front/End 개발,  W3C 웹접근성       |
 | 2019/02 ~ 2019/09 | 제주항공 FareFamily & New Class - javascript, Front/End 개발 |
 | 2018/08 ~ 2019/02 | 아시아나항공 상용 우대 프로젝트 - Spring, Maven, javascript, Java, 오라클 SQL |
@@ -120,7 +138,7 @@
 | 2015/06 ~ 2016/02 | 아시아나항공 미국 WCAG 장차법 구축 - Spring, Maven, javascript, Java, 오라클 SQL, 웹접근성 |
 | 2015/03 ~ 2015/06 | 제주항공 중국 결제 - javascript, Java 개발                   |
 
-</div>
+  </div>
 </details>
 
 ## 주요 활동 이력
