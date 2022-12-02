@@ -40,9 +40,9 @@
 * ![Firebase](https://img.shields.io/badge/firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white) ![FireStore](https://img.shields.io/badge/firestore-FFCA28?style=flat-square&logo=FireStore&logoColor=white)
 * ![Svelte Badge](https://img.shields.io/badge/svelte-FF3E00.svg?style=flat-square&logo=svelte&logoColor=white) 
 
-## 최근 2년간 이력 2021~2022
+## 최근 2년간 이력 2021~2022 
 <details> <!--open-->
-  <summary>최근 프로젝트 이력 보기</summary>
+  <summary>최근 프로젝트 이력 보기(Table형태)</summary>
   <div markdown="1">
     
 
