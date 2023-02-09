@@ -1,6 +1,6 @@
 # Who am I?
 
-<img src="https://github.com/hachuu/developGuide/blob/main/image/IMG_1792.jpg" width="50%" height="50%">
+<img src="https://user-images.githubusercontent.com/65321592/217827006-9fcde102-be14-4a39-bd7b-cbf6c2d4c40d.jpg" width="50%" height="50%">
 
 ## Name: Song HaYoung
 
