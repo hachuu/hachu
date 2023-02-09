@@ -1,6 +1,6 @@
 # Who am I?
 
-<img src="https://github.com/hachuu/study/blob/master/IMG_1792.jpg" width="50%" height="50%">
+<img src="https://github.com/hachuu/developGuide/blob/main/image/IMG_1792.jpg" width="50%" height="50%">
 
 ## Name: Song HaYoung
 
@@ -45,6 +45,7 @@
 - BE : java, spring, graddle, sql spec의 pj 운영 & 개발
 - study : svelte, vue3, linux, k8s, css
 - English : opic IH (02/04)
+
 <img src="https://github.com/hachuu/Speaking-English/raw/main/opic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202023-02-09%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.09.11.png" width="30%" height="30%" style="max-width: 100%;">
 
 | 기간              | 내용                                                         |
