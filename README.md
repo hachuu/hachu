@@ -1,6 +1,6 @@
 # Who am I?
 
-<img src="https://user-images.githubusercontent.com/65321592/98815547-a519d900-246a-11eb-962d-a5cc51966203.jpg" width="50%" height="50%">
+<img src="https://github.com/hachuu/study/blob/master/IMG_1792.jpg" width="50%" height="50%">
 
 ## Name: Song HaYoung
 
@@ -39,6 +39,21 @@
 * ![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=flat-square&logo=azure-devops&logoColor=white)
 * ![Firebase](https://img.shields.io/badge/firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white) ![FireStore](https://img.shields.io/badge/firestore-FFCA28?style=flat-square&logo=FireStore&logoColor=white)
 * ![Svelte Badge](https://img.shields.io/badge/svelte-FF3E00.svg?style=flat-square&logo=svelte&logoColor=white) 
+
+## 2023년 현재 진행중이며 관심사, 했던 것들..
+- FE : react16, vue2 pj 진행중
+- BE : java, spring, graddle, sql spec의 pj 운영 & 개발
+- study : svelte, vue3, linux, k8s, css
+- English : opic IH (02/04)
+<img src="https://github.com/hachuu/Speaking-English/raw/main/opic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202023-02-09%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.09.11.png" width="30%" height="30%" style="max-width: 100%;">
+
+| 기간              | 내용                                                         |
+| ----------------- | ------------------------------------------------------------ |
+| 2023/12 ~ 01 | vanila js => react 16 으로 프로젝트 포팅 작업 |
+| 2023/01 ~ 02 | React GiGa Genie 소스 분석, 오류 수정 |
+| 2022/02 ~ 03 | BE - 리눅스(사용), 쿠버네티스(개념) 인강, 스터디 진행 중, GCMS db 구조 파악하기 |
+| 2022/02 ~ 미정 | FE - Vue3 토이프로젝트로 프레임워크 구조 파악, 추후 GiGA GENIE 연동도 해보기 |
+| 2022/03 | 미정 |
 
 ## 최근 2년간 이력 2021~2022 
 <details> <!--open-->
