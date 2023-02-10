@@ -15,11 +15,12 @@
 - keeping my journal/diary 📒
 - studying Something (english/dev/...) 📝
 - traveling ✈🚄
-- listening music 🎶
-- watching movie 🎬
+- listening to music 🎶
+- [watching a movie](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/movies) 🎬
 - cooking 🍳
 - tennis 🏸
-- reading 📖
+- [reading](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/books) 📖
+- console game (Nintendo, PS4) 🎮 
 
 
 ## Web Development
@@ -57,11 +58,11 @@
 | 2022/03 | 미정 |
 
 ## 최근 2년간 이력 2021~2022 
-<details> <!--open-->
+ <!--
+<details open>
   <summary>최근 프로젝트 이력 보기(Table형태)</summary>
   <div markdown="1">
     
-
 <table style="border: 2px;" width:100%>
 <tr>
     <td rowspan="6"> SEO 최적화 </td>
@@ -117,8 +118,12 @@
 </table>
   </div>
 </details>
-
+open -->
     
+<details>
+  <summary>최근 프로젝트 이력 보기</summary>
+  <div markdown="1">
+  
 | Title | Contents                                                         |
 | ----------------- | ------------------------------------------------------------ |
 | SEO 최적화 | 구글 analytics 관리(페이지별 이슈 처리)로 사이트 월 방문자 30만명으로 상승하는데 기여 |
@@ -135,6 +140,9 @@
 |  | 용량 차지를 많이 하거나 사용성에 좋지 않은 library를 걷어내고 독자적인 element를 만드는데 기여함 |
 |  | 사용량이 많은 주요 페이지에 사용성을 높이기 위해 웹접근성 도입 |
 |  | B2B api 개발자 기능 테스트를 위한 테스트 페이지 개발 및 배포로 빠른 에러 대응 가능 |
+
+  </div>
+</details>
 
 ## 과거 Project
 <details>
