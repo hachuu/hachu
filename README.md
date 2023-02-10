@@ -122,9 +122,6 @@
 1. [트레드링스 홈페이지](https://www.tradlinx.com/) 
 2. [쉽고 (Shipgo)](https://shipgo.tradlinx.com/)
 
-  </div>
-</details>
-
 ![Github Stats](https://github-readme-stats.vercel.app/api/top-langs?username=hachuu&layout=compact)  
 ![Metrics](https://metrics.lecoq.io/hachuu?template=classic&config.timezone=Asia%2FSeoul&config.animated=true)  
 ![Github Stats](https://github-readme-stats.vercel.app/api?username=hachuu&show_icons=true)
