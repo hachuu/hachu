@@ -44,7 +44,7 @@
 ## 2023년 현재 진행중이며 관심사, 했던 것들..
 - FE : react16, vue2 pj 진행중
 - BE : java, spring, graddle, sql spec의 pj 운영 & 개발
-- study : svelte, vue3, linux, k8s, css
+- study : svelte, vue3, linux, k8s, css, chatGPT
 - English : opic IH (02/04)
 
 <img src="https://github.com/hachuu/Speaking-English/raw/main/opic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202023-02-09%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.09.11.png" width="30%" height="30%" style="max-width: 100%;">
@@ -55,7 +55,8 @@
 | 2023/01 ~ 02 | React GiGa Genie 소스 분석, 오류 수정 |
 | 2022/02 ~ 03 | BE - 리눅스(사용), 쿠버네티스(개념) 인강, 스터디 진행 중, GCMS db 구조 파악하기 |
 | 2022/02 ~ 미정 | FE - Vue3 토이프로젝트로 프레임워크 구조 파악, 추후 GiGA GENIE 연동도 해보기 |
-| 2022/03 | 미정 |
+| 2022/03 ~ 06 | chatGPT, Deep Learning  |
+| 2022/03 ~ 09 | sqld, sqlp 공부 (잠깐 쉬는 중..) |
 
 ## 최근 2년간 이력 2021~2022 
     
