@@ -112,6 +112,7 @@
 ### 트레드링스 홈페이지 물류 솔루션 리드 개발자
 1. [트레드링스 홈페이지](https://www.tradlinx.com/) 
 2. [쉽고 (Shipgo)](https://shipgo.tradlinx.com/)
+3. [Zimgo](https://zimgo.tradlinx.com/)
 
 ![Github Stats](https://github-readme-stats.vercel.app/api/top-langs?username=hachuu&layout=compact)  
 ![Metrics](https://metrics.lecoq.io/hachuu?template=classic&config.timezone=Asia%2FSeoul&config.animated=true)  
