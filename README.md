@@ -11,7 +11,7 @@
 ## Interest thing
 
 - coding 🖥
-- searching & sharing 🔍
+- [searching & sharing](https://github.com/hachuu/developGuide) 🔍
 - keeping my journal/diary 📒
 - studying Something (english/dev/...) 📝
 - traveling ✈🚄
@@ -28,9 +28,9 @@
 
 
 ## 2023년 현재 진행중이며 관심사, 했던 것들..
-- FE : react16, vue2 pj 진행중
+- FE : react, vue, next
 - BE : java, spring, graddle, sql spec의 pj 운영 & 개발
-- study : svelte, vue3, linux, k8s, css, chatGPT
+- study : svelte, vue3, linux, k8s, css, chatGPT, aws, python3, mongodb
 - English : opic IH (02/04)
 
 <img src="https://github.com/hachuu/Speaking-English/raw/main/opic/%E1%84%89%E1%85%B3%E1%84%8F%E1%85%B3%E1%84%85%E1%85%B5%E1%86%AB%E1%84%89%E1%85%A3%E1%86%BA%202023-02-09%20%E1%84%8B%E1%85%A9%E1%84%92%E1%85%AE%203.09.11.png" width="30%" height="30%" style="max-width: 100%;">
@@ -43,7 +43,8 @@
 | 2023/02 ~ 05 | FE - Vue2, chatGPT, GiGA GENIE 연동 |
 | 2023/03 ~ 12 | [chatGPT, Deep Learning](https://openai-embedding-completion.vercel.app/)  |
 | 2023/04 ~ 10 | 사내 개발 기술 코치 담당 |
-| 2023/02 ~ 진행중 | FE - Vue3 토이프로젝트로 프레임워크 구조 파악, vuetify 레이아웃 |
+| 2023/02 ~ 06 | FE - Vue3 토이프로젝트로 프레임워크 구조 파악, vuetify 레이아웃 |
+| 2023/07 ~ 진행중 | python, flask로 간단한 웹서비스 구현 |
 | 2023/08 ~ 09 | sqld |
 
 ## 최근 2년간 이력 2021~2022 
@@ -80,6 +81,7 @@
 | 기간              | 내용                                                         |
 | ----------------- | ------------------------------------------------------------ |
 | 2021/01 ~ 2022/10 | 트레드링스 Tradlinx Front-end 리드, Angular, React 웹 솔루션 개발 |
+| | 개인 : next js Admin / React 17 사이드 프로젝트(모바일청첩장) [Page](https://wedding-invitation-2090a.web.app/) / Svelte [개인 스터디, 토이프로젝트 진행](https://github.com/hachuu/svelte) |
 | 2019/09 ~ 2020/12 | 대한항공 온라인 개편 - Angular8 SPA, typeScript Front/End 개발,  W3C 웹접근성       |
 | 2019/02 ~ 2019/09 | 제주항공 FareFamily & New Class - javascript, Front/End 개발 |
 | 2018/08 ~ 2019/02 | 아시아나항공 상용 우대 프로젝트 - Spring, Maven, javascript, Java, 오라클 SQL |
