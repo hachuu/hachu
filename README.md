@@ -13,7 +13,7 @@
 - coding 🖥 : 개발자가 직업이라 코딩 좋아합니다.
 - [searching & sharing](https://github.com/hachuu/developGuide) 🔍 : 한번 공부한 내용을 잊지 않기 위해 정리하는 습관이 있습니다.
 - keeping my journal/diary 📒 : 생각노트를 작성하고 있습니다.
-- studying Something (english/dev/...) 📝 : 
+- studying Something (english/dev/...) 📝 : 지식을 습득하여 제 것이 되는 것을 좋아합니다.
 - traveling ✈🚄 : 자주 가지는 않지만 종종 가려 합니다.
 - listening to music 🎶 : 다양한 장르의 음악을 좋아합니다.
 - [watching a movie](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/movies) 🎬 : 시청한 영화에 별점을 매기고 다른 사람들의 리뷰와 나의 리뷰를 비교하는 것을 좋아합니다.
