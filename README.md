@@ -17,11 +17,11 @@
 - traveling ✈🚄 : 자주 가지는 않지만 종종 가려 합니다.
 - listening to music 🎶 : 다양한 장르의 음악을 좋아합니다.
 - [watching a movie](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/movies) 🎬 : 시청한 영화에 별점을 매기고 다른 사람들의 리뷰와 나의 리뷰를 비교하는 것을 좋아합니다.
-- cooking 🍳 : 한식을 좋아해서 한식만큼은 자부심이 있습니다.
+- [cooking](https://www.instagram.com/hachu.u.u/) 🍳 : 한식을 좋아해서 한식만큼은 자부심이 있습니다. 
 - tennis 🏸 : 한 때 열심히 치고 요즘엔 안하는데 가장 흥미로웠던 운동이 무엇이냐 하면 테니스라고 말하고 싶습니다. 
-- [reading](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/books) 📖 : 1년에 10권 이상 읽기 목표를 세웠는데 진작에 달성하였습니다.
+- [reading](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/books) 📖 : 독서하는 습관을 지니고 있습니다.
 - [writing](https://blog.naver.com/PostList.naver?blogId=money0621&from=postList&categoryNo=83) 📃 : 주로 독후감을 포스팅합니다.
-- console game (Nintendo, PS4) 🎮 : 오픈월드 게임을 매우 좋아합니다. 틀을 깨는 자유도가 매혹적이여서 이 분야 유명한 게임은 거의 다 해봤습니다.
+- console game (Nintendo, PS4) 🎮 : 오픈월드 게임을 매우 좋아합니다. 틀을 깨는 자유도가 매혹적이여서 이 분야 유명한 게임은 꼭 해봅니다.
 
 
 ## Web Development
