@@ -11,8 +11,8 @@
 ## Interest thing
 
 - [searching & sharing](https://github.com/hachuu/developGuide) 🔍 : 한번 공부한 내용을 잊지 않기 위해 정리하는 습관이 있습니다.
-- [reading](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/books) 📖 : 독서하는 습관을 지니고 있습니다.
-- [writing](https://blog.naver.com/PostList.naver?blogId=money0621&from=postList&categoryNo=83) 📃 : 기록하는 습관을 기르기 위해 블로그와 GitHub를 운영하고 있습니다. 블로그에는 일상적인 이야기를, GitHub에는 커리어와 관련된 내용을 정리합니다.
+- [reading](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/books) 📖 : 꾸준히 독서를 통해 새로운 지식을 쌓고 있습니다.
+- [writing](https://blog.naver.com/PostList.naver?blogId=money0621&from=postList&categoryNo=83) 📃 : 블로그와 GitHub를 운영하며 기록을 남깁니다. 블로그는 일상적인 이야기를, GitHub는 커리어와 관련된 내용을 정리합니다.
 - [watching a movie](https://pedia.watcha.com/ko-KR/users/87Gv7pR6D5E6o/contents/movies) 🎬 : 다른 사람들의 리뷰를 통해 그들의 시각을 엿보고, 나의 리뷰와 비교하며 새로운 관점을 발견하는 것을 즐깁니다. 이러한 과정에서 타인의 생각을 깊이 이해하게 됩니다.
 - [cooking](https://www.instagram.com/hachu.u.u/) 🍳 : 직접 요리하고 간단하게 플레이팅하는 걸 즐깁니다.
 - keeping my journal/diary 📒 : 생각나는 것들을 정리해 노트에 적고 있습니다. 머릿속을 정돈하고 아이디어를 구체화하는 데 도움이 됩니다.
