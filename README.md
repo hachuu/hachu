@@ -35,7 +35,10 @@
 | 2024/01 ~ 05 | 오픈소스 취약점 진단 수정 및 spring boot upgrade 작업 |
 | 2024/03 ~ 03 | spring boot version에 따른 batch 변경 |
 | 2024/05 ~ 06 | AWS CLF-C02 (AWS Certified Cloud Practitioner certificate) 취득 |
-| 2024/07 ~ 10 | 출산휴가 |
+| 2024/06 ~ 07 | BE - 보안취약점 검토 및 개발 |
+| 2024/07 ~ 10 | 출산 & 복직 |
+| 2024/11 ~ 11 | Azure Developing solutions for Microsoft Azure (AZ-204) 교육 |
+| 2024/12 ~ 12 | BE : maven, tomcat 기반 PJ 운영 (소스 검토) / FE : vue3 PJ 개발 검토 |
 
 ## Project History 최근 이력 2021~2023
 
@@ -55,7 +58,7 @@
    
 | 기간              | 내용                                                         |
 | ----------------- | ------------------------------------------------------------ |
-| 2023/12 ~ 01 | vanila js => react 16 으로 기가지니 서비스(키즈) 포팅 작업 |
+| 2023/12 ~ 01 | vanilla js => react 16 으로 기가지니 서비스(키즈) 포팅 작업 |
 | 2023/01 ~ 02 | FE - React, GiGa Genie 오류 수정 |
 | 2023/02 ~ 03 | BE - 리눅스(사용), 쿠버네티스(개념) 인강, 스터디 진행 중, GCMS db 구조 파악 |
 | 2023/02 ~ 05 | FE - Vue2, chatGPT, GiGA GENIE 연동 |
