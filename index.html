@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hachu 기술 학습 블로그</title>
+
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-light: #dbeafe;
+      --border: #e5e7eb;
+      --shadow: rgba(15, 23, 42, 0.06);
+      --shadow-hover: rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 32%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 56px 20px 40px;
+    }
+
+    header {
+      margin-bottom: 42px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 6px 13px;
+      border-radius: 999px;
+      background: var(--primary-light);
+      color: #1d4ed8;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 38px;
+      letter-spacing: -0.04em;
+      line-height: 1.25;
+    }
+
+    .description {
+      margin: 16px auto 0;
+      max-width: 640px;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .post-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .post-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 0;
+      box-shadow: 0 8px 24px var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      overflow: hidden;
+    }
+
+    .post-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px var(--shadow-hover);
+      border-color: rgba(37, 99, 235, 0.3);
+    }
+
+    .post-item a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      padding: 26px;
+    }
+
+    .post-title {
+      margin: 0 0 9px;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.35;
+    }
+
+    .post-summary {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .post-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .tag {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: #eff6ff;
+    }
+
+    .guide {
+      margin-top: 30px;
+      padding: 20px 22px;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px dashed #bfdbfe;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .guide strong {
+      color: var(--text);
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #334155;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+    }
+
+    footer {
+      margin-top: 48px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 40px 16px 30px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .description {
+        font-size: 15px;
+      }
+
+      .post-item a {
+        padding: 22px;
+      }
+
+      .post-title {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <header>
+      <span class="badge">Tech Blog</span>
+      <h1>하영의 기술 학습 블로그</h1>
+      <p class="description">
+        AWS, Azure, AI Agent, 아키텍처 설계와 개발 학습 내용을 차곡차곡 정리하는 공간입니다.
+      </p>
+    </header>
+
+    <section aria-label="블로그 글 목록">
+      <ul class="post-list">
+        <li class="post-item">
+          <a href="./AWS Summit 2026 GenAI & AgentOps.html">
+            <h2 class="post-title">AgentOps 학습 정리</h2>
+            <p class="post-summary">
+              AI Agent 운영, 관찰 가능성, 비용 최적화, 멀티 에이전트 구조에 대한 학습 내용을 정리했습니다.
+            </p>
+            <div class="post-meta" aria-label="글 태그">
+              <span class="tag">AI Agent</span>
+              <span class="tag">Observability</span>
+              <span class="tag">학습 정리</span>
+            </div>
+          </a>
+        </li>
+
+        <li class="post-item">
+          <a href="./azure-architecture.html">
+            <h2 class="post-title">Azure 기반 대체 아키텍처 설계</h2>
+            <p class="post-summary">
+              AWS에서 학습한 내용을 Azure 서비스로 대체할 때의 아키텍처와 제품 선택 기준을 정리했습니다.
+            </p>
+            <div class="post-meta" aria-label="글 태그">
+              <span class="tag">Azure</span>
+              <span class="tag">Architecture</span>
+              <span class="tag">Cloud</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <aside class="guide">
+      <strong>새 글 추가 방법:</strong>
+      HTML 파일을 같은 폴더에 올린 뒤, 위의 <code>&lt;li class="post-item"&gt;</code> 블록을 복사해서
+      파일명, 제목, 설명, 태그만 바꾸면 됩니다.
+    </aside>
+
+    <footer>
+      <p>© 2026 Hayoung Tech Blog. All notes are continuously updated.</p>
+    </footer>
+  </main>
+</body>
+</html>
