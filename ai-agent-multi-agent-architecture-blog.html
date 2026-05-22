@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Agent 개념부터 멀티 에이전트 아키텍처까지</title>
+  <meta name="description" content="LLM의 한계에서 출발해 AI Agent, Single Agent, Multi-Agent, Pub/Sub, Queue, Azure 기반 아키텍처까지 한 번에 정리한 실전 설계 가이드" />
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --surface: #ffffff;
+      --surface-soft: #f0f5ff;
+      --text: #172033;
+      --muted: #667085;
+      --primary: #2457d6;
+      --primary-dark: #173f9f;
+      --accent: #7c3aed;
+      --line: #dbe3f0;
+      --code-bg: #0f172a;
+      --code-text: #e5e7eb;
+      --success: #0f766e;
+      --warning: #b45309;
+      --radius: 22px;
+      --shadow: 0 18px 45px rgba(21, 39, 89, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      line-height: 1.72;
+      color: var(--text);
+      background: radial-gradient(circle at top left, #dce8ff 0, transparent 32%), var(--bg);
+    }
+
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 72px 0 36px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      background: linear-gradient(135deg, #101828 0%, #1f3b86 58%, #5b21b6 100%);
+      color: white;
+      padding: 56px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      top: -120px;
+      width: 320px;
+      height: 320px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 14px;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+
+    h1 {
+      margin: 24px 0 14px;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.12;
+      letter-spacing: -0.05em;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      font-size: clamp(17px, 2vw, 21px);
+      color: rgba(255,255,255,0.82);
+      margin: 0 0 28px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.92);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 28px;
+      align-items: start;
+      padding: 18px 0 80px;
+    }
+
+    .toc {
+      position: sticky;
+      top: 20px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.86);
+      backdrop-filter: blur(12px);
+      padding: 22px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .toc strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 15px;
+      color: #101828;
+    }
+
+    .toc a {
+      display: block;
+      padding: 7px 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .toc a:hover { color: var(--primary); }
+
+    .content {
+      min-width: 0;
+    }
+
+    section {
+      margin-bottom: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.94);
+      padding: 34px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(25px, 3vw, 34px);
+      line-height: 1.25;
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      margin: 28px 0 12px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    h4 {
+      margin: 22px 0 10px;
+      font-size: 17px;
+      color: #243b68;
+    }
+
+    p { margin: 0 0 14px; }
+
+    ul, ol { padding-left: 22px; margin: 10px 0 18px; }
+    li { margin: 5px 0; }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .callout {
+      border-left: 5px solid var(--primary);
+      background: var(--surface-soft);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin: 22px 0;
+      font-weight: 700;
+      color: #163269;
+    }
+
+    .quote {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 22px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #eef4ff, #f7f0ff);
+      border: 1px solid #d8e2ff;
+      font-size: 19px;
+      font-weight: 800;
+      color: #172554;
+      margin: 24px 0;
+    }
+
+    .quote::before {
+      content: "“";
+      font-size: 42px;
+      line-height: 1;
+      color: var(--primary);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+
+    .mini-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      padding: 20px;
+    }
+
+    .mini-card h3, .mini-card h4 {
+      margin-top: 0;
+    }
+
+    .mini-card .label {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      color: white;
+      background: var(--primary);
+    }
+
+    .label.purple { background: var(--accent); }
+    .label.green { background: var(--success); }
+    .label.orange { background: var(--warning); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 18px 0;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: #eef4ff;
+      color: #1d3f85;
+      font-weight: 800;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 0.92em;
+    }
+
+    pre {
+      overflow: auto;
+      padding: 20px;
+      border-radius: 18px;
+      background: var(--code-bg);
+      color: var(--code-text);
+      line-height: 1.55;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+
+    .diagram {
+      margin: 20px 0;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #f8fbff;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .diagram img {
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      background: #fbfdff;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .step-list {
+      counter-reset: step;
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .step-list > li {
+      position: relative;
+      padding-left: 52px;
+      margin: 18px 0;
+    }
+
+    .step-list > li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: inline-grid;
+      place-items: center;
+      background: var(--primary);
+      color: white;
+      font-weight: 900;
+    }
+
+    .footer-note {
+      margin-top: 36px;
+      padding: 24px;
+      border-radius: 24px;
+      background: #101828;
+      color: rgba(255,255,255,0.88);
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .toc { position: static; }
+      .hero-card { padding: 36px 26px; }
+      section { padding: 26px 20px; }
+      .grid, .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero page">
+    <div class="hero-card">
+      <span class="eyebrow">AI Architecture · Agent Design · Azure</span>
+      <h1>AI Agent 개념부터<br />멀티 에이전트 아키텍처까지</h1>
+      <p class="subtitle">LLM의 한계에서 출발해 Single Agent, Multi-Agent, Pub/Sub, Queue, Azure 기반 운영 구조까지 한 번에 연결해서 이해하는 실전 설계 가이드</p>
+      <div class="hero-tags">
+        <span class="tag">LLM 한계</span>
+        <span class="tag">Agent 구조</span>
+        <span class="tag">Multi-Agent</span>
+        <span class="tag">Pub/Sub vs Queue</span>
+        <span class="tag">Azure Architecture</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="page layout">
+    <aside class="toc">
+      <strong>목차</strong>
+      <a href="#llm">1. LLM이란?</a>
+      <a href="#background">2. AI Agent가 등장한 배경</a>
+      <a href="#agent">3. AI Agent란?</a>
+      <a href="#structure">4. Single vs Multi Agent</a>
+      <a href="#patterns">5. 멀티 에이전트 패턴</a>
+      <a href="#pubsub-queue">6. Pub/Sub vs Queue</a>
+      <a href="#architecture">7. Sample Architecture</a>
+      <a href="#contracts">8. Agent Contract</a>
+      <a href="#workflow">9. 샘플 워크플로우</a>
+      <a href="#next">10. Next AI Agent</a>
+      <a href="#conclusion">결론</a>
+    </aside>
+
+    <article class="content">
+      <section id="llm">
+        <h2>1. LLM이란?</h2>
+        <p class="lead">LLM은 대량의 텍스트를 학습해 다음에 올 말을 확률적으로 예측하는 언어 모델이다.</p>
+        <ul>
+          <li>질문에 대한 그럴듯한 응답 생성에는 강하다.</li>
+          <li>하지만 스스로 외부 시스템을 조작하거나 업무를 끝까지 수행하지는 못한다.</li>
+          <li>기본 구조는 상태·기억·목표가 없는 <strong>stateless 단발성 응답</strong>에 가깝다.</li>
+        </ul>
+        <div class="quote">LLM은 말을 생성하지만, Agent는 목표를 가지고 일을 수행한다.</div>
+      </section>
+
+      <section id="background">
+        <h2>2. AI Agent가 등장한 배경</h2>
+        <p>AI Agent는 단순히 더 좋은 답변을 만들기 위해 나온 개념이 아니다. 핵심은 <strong>답변 생성 이후의 실행 문제</strong>를 해결하는 것이다.</p>
+        <div class="grid">
+          <div class="mini-card">
+            <span class="label orange">LLM의 한계</span>
+            <ul>
+              <li>대화 맥락과 정보를 지속적으로 기억하지 못함</li>
+              <li>DB, API, 알림 같은 외부 시스템을 직접 제어하지 못함</li>
+              <li>목표 달성 여부나 결과 검증에 대한 책임 구조가 없음</li>
+            </ul>
+          </div>
+          <div class="mini-card">
+            <span class="label green">Agent의 필요성</span>
+            <ul>
+              <li>답변 생성을 넘어 실제 업무를 처리하는 AI가 필요해짐</li>
+              <li>LLM에 상태, 도구 사용, 실행 로직을 결합함</li>
+              <li>반복 작업, 워크플로우, 자동화를 제어 가능한 구조로 만들 수 있음</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="agent">
+        <h2>3. AI Agent란?</h2>
+        <p class="lead">AI Agent는 생각만 하는 AI가 아니라, 상황을 이해하고 필요한 일을 나눠 실제 행동까지 수행하도록 만든 프로그램 구조다.</p>
+        <div class="callout">핵심 루프: Plan → Act → Observe → Iterate</div>
+        <p>단순 챗봇이 답변 생성에 집중한다면, 에이전트는 보통 아래 요소를 함께 가진다.</p>
+        <table>
+          <thead>
+            <tr><th>구성 요소</th><th>역할</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Tool Calling</strong></td><td>DB 조회, API 호출, 파일 읽기/쓰기, Slack 전송 등 외부 행동을 수행한다.</td></tr>
+            <tr><td><strong>State</strong></td><td>대화·작업 컨텍스트, 세션 메모리, 장기 메모리를 관리한다.</td></tr>
+            <tr><td><strong>Orchestration</strong></td><td>어떤 순서로 어떤 작업을 시킬지 결정하고, 실패 시 재시도·대체 경로를 적용한다.</td></tr>
+            <tr><td><strong>Guardrail</strong></td><td>정책, 보안, PII 마스킹, 입력 검증, 비용·시간 제한을 관리한다.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="structure">
+        <h2>4. Single Agent에서 Multi-Agent로</h2>
+        <p>처음에는 하나의 Agent가 모든 역할을 맡아도 된다. 하지만 검색, 요약, 분류, 검증, 실행이 한 곳에 몰리면 복잡도와 실패 리스크가 커진다.</p>
+        <div class="grid">
+          <div class="mini-card">
+            <span class="label">Single Agent</span>
+            <h3>빠르게 시작하기 좋은 구조</h3>
+            <ol>
+              <li>사용자 입력</li>
+              <li>LLM이 생각과 툴 호출을 결정</li>
+              <li>툴 결과를 반영해 최종 답변</li>
+            </ol>
+            <p><strong>한계:</strong> 역할이 한 곳에 모여 실패·지연·비용이 커지고 테스트와 디버깅이 어렵다.</p>
+          </div>
+          <div class="mini-card">
+            <span class="label purple">Multi-Agent</span>
+            <h3>운영 가능한 구조로 분리</h3>
+            <ul>
+              <li>Router: 의도 분류</li>
+              <li>Retriever: 근거 수집</li>
+              <li>Planner: 계획 수립</li>
+              <li>Executor: 툴 실행</li>
+              <li>Verifier: 검증</li>
+              <li>Summarizer: 결과 정리</li>
+              <li>Memory Manager: STM/LTM 관리</li>
+            </ul>
+          </div>
+        </div>
+        <div class="quote">Single Agent는 빠르지만 취약하고, Multi Agent는 느릴 수 있지만 운영 가능하다.</div>
+
+        <h3>Single → Multi 구조화 단계</h3>
+        <ol class="step-list">
+          <li><strong>역할 분리 + 계약</strong><br />각 서브 에이전트의 입력/출력 스키마(JSON)를 고정한다. 예를 들어 Retriever는 근거 목록, 출처, 신뢰도만 반환하게 만든다.</li>
+          <li><strong>오케스트레이터 도입</strong><br />중앙 Orchestrator가 어떤 에이전트를 언제 호출할지, 타임아웃·재시도·폴백을 어떻게 처리할지 결정한다.</li>
+          <li><strong>비동기화 + Pub/Sub / Queue 확장</strong><br />요청량이 늘어나면 동기 체인이 길어져 느려지고 불안정해진다. 이때 이벤트와 작업 큐를 분리한다.</li>
+          <li><strong>상태/메모리 분리</strong><br />에이전트가 각자 메모리를 갖지 않도록 하고, Memory Service를 통해 STM과 LTM을 중앙 관리한다.</li>
+        </ol>
+      </section>
+
+      <section id="patterns">
+        <h2>5. 멀티 에이전트 아키텍처 패턴 3가지</h2>
+        <div class="grid-3">
+          <div class="mini-card">
+            <span class="label">Pattern 1</span>
+            <h3>Manager-Worker</h3>
+            <p>Manager가 계획을 세우고 Worker들이 검색, 실행, 검증을 담당한다.</p>
+            <p><strong>장점:</strong> 통제가 쉽고 운영·디버깅이 편하다.</p>
+            <p><strong>예시:</strong> 사내 업무 자동화, 고객응대, 워크플로우</p>
+          </div>
+          <div class="mini-card">
+            <span class="label purple">Pattern 2</span>
+            <h3>Event-Driven</h3>
+            <p>이벤트가 발생하면 여러 에이전트가 구독해 각자 필요한 처리를 한다.</p>
+            <p><strong>장점:</strong> 확장성과 느슨한 결합이 좋다.</p>
+            <p><strong>주의:</strong> 관측성이 없으면 추적과 디버깅이 어려워진다.</p>
+          </div>
+          <div class="mini-card">
+            <span class="label green">Pattern 3</span>
+            <h3>Pipeline / DAG</h3>
+            <p>정해진 단계대로 A → B → C 순서로 처리한다.</p>
+            <p><strong>장점:</strong> 결과 재현과 테스트가 쉽다.</p>
+            <p><strong>예시:</strong> 문서 처리, 분류, 추출, 요약, 검증</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="pubsub-queue">
+        <h2>6. Pub/Sub vs Queue</h2>
+        <p>둘 다 비동기 구조에서 자주 등장하지만 역할은 다르다. 헷갈리면 이렇게 기억하면 된다.</p>
+        <div class="callout">Pub/Sub = 알림(Event), Queue = 작업(Job)</div>
+        <pre><code>사용자 메시지 들어옴
+→ 콘텐츠인지 판단
+→ 웹검색/사내검색
+→ 요약
+→ 검증
+→ Slack 전송/저장</code></pre>
+        <table>
+          <thead>
+            <tr><th>구분</th><th>예시</th><th>의미</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Pub/Sub 이벤트</strong></td><td>MessageReceived, ContentDetected, EvidenceCollected, DraftReady, Verified</td><td>어떤 일이 발생했음을 여러 소비자에게 알린다.</td></tr>
+            <tr><td><strong>Queue 작업</strong></td><td>RunDetectionJob, RunRetrievalJob, RunSummarizeJob, RunVerificationJob, RunPublishJob</td><td>처리해야 할 일을 안정적으로 순서·부하 조절하며 수행한다.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="architecture">
+        <h2>7. Sample Architecture</h2>
+        <h3>7-1. 동기 버전: Orchestrator 중심</h3>
+        <p>초기에는 API가 Orchestrator를 호출하고, Orchestrator가 각 Agent와 Memory Service를 동기적으로 호출하는 구조가 가장 단순하다.</p>
+        <div class="diagram">
+          <img src="https://github.com/user-attachments/assets/2b2fbf9f-c050-41b4-80ec-d7fd7fe9aeae" alt="동기 Orchestrator 중심 멀티 에이전트 아키텍처" />
+        </div>
+        <details>
+          <summary>Mermaid 코드 보기</summary>
+          <pre><code>flowchart LR
+  U[User/App] --> API[Fastify API]
+  API --> ORCH[Orchestrator/Manager]
+
+  ORCH --> R[Router Agent]
+  ORCH --> P[Planner Agent]
+  ORCH --> RET[Retriever Agent]
+  ORCH --> EXE[Executor Agent]
+  ORCH --> V[Verifier Agent]
+  ORCH --> S[Summarizer Agent]
+
+  ORCH <--> MEM[Memory Service]
+  MEM <--> STM[(Redis: STM)]
+  MEM <--> LTM[(DB/Vector: LTM)]
+
+  EXE --> TOOLS[Tools: DB/API/Slack]
+  ORCH --> API --> U</code></pre>
+        </details>
+
+        <h3>7-2. 비동기 버전: Pub/Sub + Queue</h3>
+        <p>요청량이 늘거나 특정 단계가 오래 걸리면 Pub/Sub와 Queue를 통해 처리 단계를 분리한다. 실패한 작업은 DLQ로 보내고 운영 알람을 붙인다.</p>
+        <div class="diagram">
+          <img src="https://github.com/user-attachments/assets/7542b4b3-1a5d-4632-b9c7-2aeb48d6719c" alt="비동기 Pub/Sub Queue 기반 멀티 에이전트 아키텍처" />
+        </div>
+        <details>
+          <summary>Mermaid 코드 보기</summary>
+          <pre><code>flowchart TB
+  U[User/App] --> API[Fastify API]
+  API --> EV[Event: MessageReceived]
+  EV --> EG[(Pub/Sub: Event Bus)]
+
+  EG --> ORCH[Orchestrator]
+  ORCH --> Q1[(Queue: Detect/Route Jobs)]
+  ORCH --> Q2[(Queue: Retrieval Jobs)]
+  ORCH --> Q3[(Queue: Summarize/Verify Jobs)]
+  ORCH --> Q4[(Queue: Publish/Store Jobs)]
+
+  Q1 --> R[Router Agent]
+  Q2 --> RET[Retriever Agent]
+  Q3 --> S[Summarizer Agent]
+  Q3 --> V[Verifier Agent]
+  Q4 --> PUB[Publisher Agent]
+
+  ORCH <--> MEM[Memory Service]
+  MEM <--> STM[(Redis STM)]
+  MEM <--> LTM[(Cosmos/PG + Vector LTM)]
+
+  PUB --> Slack[Slack Webhook]
+  PUB --> DB[(DB/Blob)]
+  PUB --> EG2[Event: Done/Failed] --> EG</code></pre>
+        </details>
+
+        <h3>Azure 리소스 위치</h3>
+        <table>
+          <thead>
+            <tr><th>리소스</th><th>Azure Portal 경로</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Event Grid</td><td>Azure Portal → Event Grid → Topics / Subscriptions</td></tr>
+            <tr><td>Service Bus</td><td>Azure Portal → Service Bus → Queues / Topics</td></tr>
+            <tr><td>Azure Functions</td><td>Azure Portal → Function App</td></tr>
+            <tr><td>Redis</td><td>Azure Portal → Azure Cache for Redis</td></tr>
+            <tr><td>Cosmos DB</td><td>Azure Portal → Azure Cosmos DB</td></tr>
+            <tr><td>Monitor / Logs</td><td>Azure Portal → Monitor → Log Analytics / Application Insights</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="contracts">
+        <h2>8. 서브 에이전트 입력/출력 계약</h2>
+        <p>멀티 에이전트에서 가장 중요한 것은 역할 분리보다 <strong>계약을 고정하는 것</strong>이다. 입력과 출력 형태가 고정되어야 테스트, 교체, 장애 분석이 가능하다.</p>
+
+        <details open>
+          <summary>공통 Envelope</summary>
+          <pre><code>{
+  "traceId": "uuid",
+  "sessionId": "string",
+  "timestamp": "ISO-8601",
+  "input": {},
+  "context": {
+    "userLocale": "ko-KR",
+    "tenant": "dev|stg|prd",
+    "budget": { "maxTokens": 2000, "maxToolCalls": 5 },
+    "security": { "piiAllowed": false }
+  }
+}</code></pre>
+        </details>
+
+        <details>
+          <summary>Router Agent</summary>
+          <pre><code>// input
+{
+  "message": "사용자 원문",
+  "hints": { "channel": "web|slack|app", "knownIntents": ["news", "weather", "content"] }
+}
+
+// output
+{
+  "route": "content_search|qa|action|handoff",
+  "confidence": 0.0,
+  "signals": ["hasContentTitleLikePhrase", "needsWebSearch"],
+  "normalizedQuery": "검색 키워드",
+  "language": "ko"
+}</code></pre>
+        </details>
+
+        <details>
+          <summary>Planner Agent</summary>
+          <pre><code>// input
+{
+  "goal": "무엇을 달성할지",
+  "routeResult": { "route": "content_search", "normalizedQuery": "..." },
+  "constraints": { "timeLimitMs": 8000, "noWeb": false }
+}
+
+// output
+{
+  "plan": [
+    { "step": 1, "agent": "Retriever", "task": "관련 근거 수집", "inputs": { "query": "..." } },
+    { "step": 2, "agent": "Summarizer", "task": "요약 초안", "inputs": { "style": "short" } },
+    { "step": 3, "agent": "Verifier", "task": "팩트/정책 검증", "inputs": {} }
+  ],
+  "stopConditions": { "maxSteps": 6, "failFast": true }
+}</code></pre>
+        </details>
+
+        <details>
+          <summary>Retriever / Executor / Verifier / Memory Manager 핵심 출력</summary>
+          <pre><code>// Retriever output
+{
+  "evidence": [
+    {
+      "title": "문서/기사 제목",
+      "snippet": "핵심 발췌",
+      "source": "web|internal",
+      "url": "가능하면",
+      "publishedAt": "ISO-8601",
+      "confidence": 0.0
+    }
+  ],
+  "coverage": { "isEnough": true, "missingAngles": ["공식 발표", "가격"] }
+}
+
+// Verifier output
+{
+  "verdict": "pass|revise|fail",
+  "issues": [
+    { "type": "missing_citation", "detail": "2번째 문장 출처 필요" },
+    { "type": "overclaim", "detail": "단정 표현 완화 필요" }
+  ],
+  "revisedDraft": "수정본"
+}</code></pre>
+        </details>
+      </section>
+
+      <section id="workflow">
+        <h2>9. 샘플 워크플로우</h2>
+        <h3>콘텐츠명 추정 → 검색 → 요약 → 검증 → 공유/저장</h3>
+        <ol class="step-list">
+          <li><strong>API</strong>가 사용자 발화를 수신하고 <code>MessageReceived</code> 이벤트를 발행한다.</li>
+          <li><strong>Router Job</strong>이 콘텐츠명, 뉴스, 일반 Q&A 등으로 분기한다.</li>
+          <li><strong>Retriever Job</strong>이 웹/내부 검색을 통해 근거를 수집한다.</li>
+          <li><strong>Summarize Job</strong>이 짧은 요약과 핵심 포인트를 생성한다.</li>
+          <li><strong>Verify Job</strong>이 출처, 과장 표현, 정책 위반 여부를 검증한다.</li>
+          <li><strong>Publish Job</strong>이 Slack, DB, 블로그 등으로 전송하거나 저장한다.</li>
+          <li>실패 시 DLQ로 보내고 <code>Failed</code> 이벤트를 발행해 알람을 보낸다.</li>
+        </ol>
+
+        <h3>Router 분기 예시</h3>
+        <pre><code>// 입력
+"냉부해 보고 싶어"
+
+// Router Output
+{
+  "route": "content_search",
+  "confidence": 0.82,
+  "signals": ["hasContentTitleLikePhrase", "needsWebSearch"],
+  "normalizedQuery": "냉부해 프로그램"
+}</code></pre>
+
+        <h3>Node/Azure 구현 팁</h3>
+        <div class="grid">
+          <div class="mini-card">
+            <h4>운영 안정성</h4>
+            <ul>
+              <li>모든 이벤트/큐 메시지에 <code>traceId</code> 넣기</li>
+              <li>같은 Job이 두 번 실행돼도 깨지지 않도록 Idempotency Key 사용</li>
+              <li>Retrieval은 재시도 2~3회, Publish는 멱등성과 짧은 timeout 우선</li>
+            </ul>
+          </div>
+          <div class="mini-card">
+            <h4>비용과 품질</h4>
+            <ul>
+              <li>step별 <code>maxTokens</code>, <code>maxToolCalls</code> 하드 제한</li>
+              <li>Memory Service 중앙화</li>
+              <li>latency, 에러율, 토큰, 툴콜 수를 Application Insights에 로깅</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3>예시: 오늘 날씨 무드에 맞는 노래와 영화 추천</h3>
+        <div class="diagram">
+          <img src="https://github.com/user-attachments/assets/13d030f9-b878-487d-85f4-bed533ed62cb" alt="날씨 무드 추천 동기 처리 흐름도" />
+        </div>
+        <div class="diagram">
+          <img src="https://github.com/user-attachments/assets/43b0a994-669c-4dbd-9761-7babbedbe327" alt="날씨 무드 추천 비동기 Pub/Sub Queue 처리 흐름도" />
+        </div>
+        <table>
+          <thead>
+            <tr><th>Agent</th><th>하는 일</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Router</td><td>날씨 기반 감성 추천으로 분기하고 요청을 날씨 조회, 무드 추출, 음악, 영화로 쪼갠다.</td></tr>
+            <tr><td>Planner</td><td>날씨 → 무드 → 후보 수집 → 정렬 → 검증 → 응답 플랜을 만든다.</td></tr>
+            <tr><td>Weather Agent</td><td>사용자 위치 기준 오늘 날씨를 가져온다.</td></tr>
+            <tr><td>Mood Mapper</td><td>비/흐림은 차분·멜랑콜리, 맑음은 산뜻·활기처럼 날씨를 무드로 변환한다.</td></tr>
+            <tr><td>Retriever</td><td>음악/영화 후보 리스트를 내부 DB, 추천 API, 캐시 등에서 가져온다.</td></tr>
+            <tr><td>Ranker</td><td>무드 일치도, 대중성, 다양성, 사용자 선호를 반영해 정렬한다.</td></tr>
+            <tr><td>Verifier</td><td>과장, 금칙, 부적절 콘텐츠 여부를 점검한다.</td></tr>
+            <tr><td>Composer</td><td>보기 좋은 포맷으로 추천과 한 줄 코멘트, 대체안을 구성한다.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="next">
+        <h2>10. Next AI Agent</h2>
+        <p>현재 Agent는 유용하지만 만능은 아니다. 이해가 아니라 패턴 추정에 가깝고, 장기 목표의 일관성이나 자기 평가, 현실 세계와의 직접 경험에는 한계가 있다.</p>
+        <div class="grid">
+          <div class="mini-card">
+            <span class="label">Model-based Agent</span>
+            <h3>세계 모델을 가진 Agent</h3>
+            <p>내부에 세상 시뮬레이터를 두고, 행동 전에 여러 미래를 가상으로 돌려본다.</p>
+          </div>
+          <div class="mini-card">
+            <span class="label purple">Collective Intelligence</span>
+            <h3>집단 지능 시스템</h3>
+            <p>Agent, 사람, 규칙, 피드백 루프가 함께 판단을 개선한다.</p>
+          </div>
+          <div class="mini-card">
+            <span class="label green">Learning System</span>
+            <h3>스스로 변하는 시스템</h3>
+            <p>실패와 성공을 구조적으로 학습해 프롬프트, 룰, 워크플로우를 조정한다.</p>
+          </div>
+          <div class="mini-card">
+            <span class="label orange">Human-in-the-loop</span>
+            <h3>인간 참여형 AI</h3>
+            <p>Agent가 단독으로 결정하지 않고 근거를 만들어 사람이 최종 판단하도록 돕는다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="conclusion">
+        <h2>결론</h2>
+        <p class="lead">Agent 설계의 목표는 “사람 대신 결정하는 AI”가 아니라, <strong>사람이 더 나은 판단을 하도록 돕는 시스템</strong>을 만드는 것이다.</p>
+        <div class="footer-note">
+          <p><strong>핵심 정리</strong></p>
+          <p>LLM은 말을 잘 만들지만, 실제 업무를 안정적으로 끝내려면 상태, 도구, 실행 흐름, 검증, 관측성이 필요하다. Single Agent는 빠른 실험에 적합하고, Multi-Agent는 운영 가능한 시스템으로 확장할 때 필요하다. 특히 Azure 기반으로 설계한다면 Event Grid, Service Bus, Functions, Redis, Cosmos DB, Application Insights를 역할에 맞게 분리하는 것이 중요하다.</p>
+        </div>
+      </section>
+    </article>
+  </main>
+</body>
+</html>
