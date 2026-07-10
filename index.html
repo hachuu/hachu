@@ -1,317 +1,1047 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hachu Dev Learning Log</title>
+  <meta
+    name="description"
+    content="AI Agent, Cloud, Architecture, Prompt Engineering과 개발 학습 기록을 정리하는 Hayoung의 Tech Log"
+  />
+  <title>Hayoung Tech Research Notes</title>
 
   <style>
     :root {
-      --bg: #f7f8fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --primary-light: #dbeafe;
-      --border: #e5e7eb;
-      --shadow: rgba(15, 23, 42, 0.06);
-      --shadow-hover: rgba(15, 23, 42, 0.12);
+      --coral: #ffb6a6;
+      --cream: #ffebd3;
+      --mint: #9bcec1;
+      --blue: #67a2c5;
+
+      --ink: #26343e;
+      --muted: #667781;
+      --surface: rgba(255, 255, 255, 0.88);
+      --surface-solid: #ffffff;
+      --line: rgba(77, 103, 116, 0.14);
+      --shadow: 0 18px 48px rgba(53, 87, 103, 0.11);
+      --shadow-hover: 0 26px 62px rgba(53, 87, 103, 0.18);
     }
 
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      min-height: 100vh;
+      font-family:
+        Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
+      color: var(--ink);
+      line-height: 1.65;
       background:
-        radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 32%),
-        var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+        radial-gradient(circle at 8% 5%, rgba(255, 182, 166, 0.34), transparent 25%),
+        radial-gradient(circle at 93% 13%, rgba(155, 206, 193, 0.32), transparent 27%),
+        linear-gradient(180deg, #fff8ef 0%, #f8fbfa 46%, #f4f8fb 100%);
     }
 
-    .container {
-      width: 100%;
-      max-width: 920px;
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page-shell {
+      width: min(1120px, calc(100% - 40px));
       margin: 0 auto;
-      padding: 56px 20px 40px;
+      padding: 34px 0 48px;
     }
 
-    header {
-      margin-bottom: 42px;
-      text-align: center;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 7px 4px 22px;
     }
 
-    .badge {
-      display: inline-block;
-      margin-bottom: 14px;
-      padding: 6px 13px;
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-mark {
+      display: grid;
+      grid-template-columns: repeat(2, 8px);
+      grid-template-rows: repeat(2, 8px);
+      gap: 3px;
+      padding: 8px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 24px rgba(53, 87, 103, 0.1);
+    }
+
+    .brand-mark span {
+      border-radius: 3px;
+    }
+
+    .brand-mark span:nth-child(1) { background: var(--coral); }
+    .brand-mark span:nth-child(2) { background: var(--cream); }
+    .brand-mark span:nth-child(3) { background: var(--mint); }
+    .brand-mark span:nth-child(4) { background: var(--blue); }
+
+    .topbar-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 430px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+      gap: 44px;
+      align-items: center;
+      padding: 66px 66px 56px;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 38px;
+      background:
+        linear-gradient(135deg, rgba(255, 235, 211, 0.92), rgba(255, 255, 255, 0.92) 58%),
+        var(--surface-solid);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      z-index: -1;
+      filter: blur(1px);
+    }
+
+    .hero::before {
+      width: 310px;
+      height: 310px;
+      right: -105px;
+      top: -115px;
+      background: rgba(103, 162, 197, 0.22);
+    }
+
+    .hero::after {
+      width: 240px;
+      height: 240px;
+      left: 46%;
+      bottom: -145px;
+      background: rgba(155, 206, 193, 0.22);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 18px;
+      padding: 8px 13px;
       border-radius: 999px;
-      background: var(--primary-light);
-      color: #1d4ed8;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: #52758b;
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 0 5px rgba(255, 182, 166, 0.22);
     }
 
     h1 {
+      max-width: 700px;
       margin: 0;
-      font-size: 38px;
-      letter-spacing: -0.04em;
-      line-height: 1.25;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 1.03;
+      letter-spacing: -0.065em;
     }
 
-    .description {
-      margin: 16px auto 0;
-      max-width: 640px;
+    .hero-highlight {
+      color: var(--blue);
+    }
+
+    .hero-description {
+      max-width: 650px;
+      margin: 24px 0 0;
       color: var(--muted);
-      font-size: 16px;
+      font-size: 17px;
+      word-break: keep-all;
     }
 
-    .post-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .hero-keywords {
       display: flex;
-      flex-direction: column;
-      gap: 18px;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 28px;
+    }
+
+    .hero-keyword {
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(77, 103, 116, 0.1);
+      color: #5f707a;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .research-card {
+      position: relative;
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 38px rgba(62, 94, 108, 0.12);
+    }
+
+    .research-card::before {
+      content: "";
+      position: absolute;
+      inset: 14px auto 14px 0;
+      width: 5px;
+      border-radius: 0 999px 999px 0;
+      background: linear-gradient(var(--coral), var(--mint), var(--blue));
+    }
+
+    .research-label {
+      margin: 0 0 18px;
+      color: #71808a;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .research-title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.35;
+      letter-spacing: -0.035em;
+    }
+
+    .research-copy {
+      margin: 14px 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .research-progress {
+      display: grid;
+      gap: 13px;
+    }
+
+    .progress-row {
+      display: grid;
+      grid-template-columns: 88px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      color: #5f707a;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .progress-track {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(103, 162, 197, 0.12);
+    }
+
+    .progress-track span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+    }
+
+    .progress-row:nth-child(1) .progress-track span {
+      width: 88%;
+      background: var(--blue);
+    }
+
+    .progress-row:nth-child(2) .progress-track span {
+      width: 72%;
+      background: var(--mint);
+    }
+
+    .progress-row:nth-child(3) .progress-track span {
+      width: 52%;
+      background: var(--coral);
+    }
+
+    .content-section {
+      padding: 70px 4px 0;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .section-kicker {
+      margin: 0 0 5px;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 850;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.2;
+      letter-spacing: -0.05em;
+    }
+
+    .result-count {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .category-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 2px 2px 13px;
+      margin-bottom: 18px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(103, 162, 197, 0.45) transparent;
+    }
+
+    .category-tabs::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .category-tabs::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: rgba(103, 162, 197, 0.45);
+    }
+
+    .category-tab {
+      flex: 0 0 auto;
+      min-height: 42px;
+      padding: 10px 17px;
+      border: 1px solid rgba(77, 103, 116, 0.13);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.68);
+      color: #61727c;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 800;
+      transition:
+        transform 0.2s ease,
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .category-tab:hover {
+      transform: translateY(-2px);
+      color: #416f88;
+      border-color: rgba(103, 162, 197, 0.5);
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .category-tab:focus-visible {
+      outline: 3px solid rgba(103, 162, 197, 0.24);
+      outline-offset: 3px;
+    }
+
+    .category-tab.is-active {
+      color: #ffffff;
+      border-color: var(--blue);
+      background: var(--blue);
+      box-shadow: 0 10px 25px rgba(103, 162, 197, 0.28);
+    }
+
+    .post-grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin: 0;
+      padding: 0;
     }
 
     .post-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0;
-      box-shadow: 0 8px 24px var(--shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      --card-accent: var(--blue);
+      position: relative;
+      min-width: 0;
       overflow: hidden;
+      border: 1px solid rgba(77, 103, 116, 0.11);
+      border-radius: 27px;
+      background: var(--surface);
+      box-shadow: 0 13px 36px rgba(62, 94, 108, 0.09);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .post-item[data-primary-theme="ai-agent"] {
+      --card-accent: var(--blue);
+    }
+
+    .post-item[data-primary-theme="cloud-architecture"] {
+      --card-accent: var(--mint);
+    }
+
+    .post-item[data-primary-theme="prompt-ai"] {
+      --card-accent: var(--coral);
+    }
+
+    .post-item[data-primary-theme="devops-observability"] {
+      --card-accent: #7aaeb2;
+    }
+
+    .post-item[data-primary-theme="backend-platform"] {
+      --card-accent: #d8a27f;
+    }
+
+    .post-item[data-primary-theme="frontend-web"] {
+      --card-accent: #8f9dc9;
+    }
+
+    .post-item::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 6px;
+      background: var(--card-accent);
+      transition: width 0.25s ease;
+    }
+
+    .post-item::after {
+      content: "";
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      right: -72px;
+      bottom: -85px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--card-accent) 16%, transparent);
+      pointer-events: none;
+    }
+
+    .post-item[hidden] {
+      display: none;
     }
 
     .post-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 14px 36px var(--shadow-hover);
-      border-color: rgba(37, 99, 235, 0.3);
+      transform: translateY(-7px);
+      border-color: color-mix(in srgb, var(--card-accent) 40%, transparent);
+      box-shadow: var(--shadow-hover);
     }
 
-    .post-item a {
-      text-decoration: none;
+    .post-item:hover::before {
+      width: 10px;
+    }
+
+    .post-link {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 290px;
+      height: 100%;
+      padding: 29px 29px 25px 32px;
       color: inherit;
-      display: block;
-      padding: 26px;
+      text-decoration: none;
+    }
+
+    .post-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 21px;
+    }
+
+    .post-category {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: color-mix(in srgb, var(--card-accent) 78%, #31444e);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .post-category::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--card-accent);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--card-accent) 18%, transparent);
+    }
+
+    .post-arrow {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      place-items: center;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--card-accent) 13%, white);
+      color: color-mix(in srgb, var(--card-accent) 82%, #31444e);
+      font-size: 18px;
+      transition:
+        transform 0.22s ease,
+        background 0.22s ease;
+    }
+
+    .post-item:hover .post-arrow {
+      transform: translate(3px, -3px);
+      background: color-mix(in srgb, var(--card-accent) 21%, white);
     }
 
     .post-title {
-      margin: 0 0 9px;
+      margin: 0 0 12px;
       font-size: 23px;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.35;
+      line-height: 1.38;
+      letter-spacing: -0.04em;
+      word-break: keep-all;
     }
 
     .post-summary {
-      margin: 0 0 16px;
+      margin: 0 0 22px;
       color: var(--muted);
-      font-size: 15px;
+      font-size: 14px;
+      word-break: keep-all;
     }
 
     .post-meta {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
-      align-items: center;
-      font-size: 13px;
-      color: var(--primary);
-      font-weight: 700;
+      gap: 7px;
+      margin-top: auto;
     }
 
     .tag {
-      padding: 4px 9px;
+      padding: 5px 9px;
       border-radius: 999px;
-      background: #eff6ff;
+      background: color-mix(in srgb, var(--card-accent) 10%, white);
+      color: color-mix(in srgb, var(--card-accent) 68%, #465963);
+      font-size: 11px;
+      font-weight: 800;
     }
 
-    .guide {
-      margin-top: 30px;
-      padding: 20px 22px;
-      border-radius: 18px;
-      background: #ffffff;
-      border: 1px dashed #bfdbfe;
+    .empty-state {
+      display: none;
+      padding: 68px 24px;
+      border: 1px dashed rgba(103, 162, 197, 0.5);
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.64);
+      text-align: center;
       color: var(--muted);
-      font-size: 14px;
     }
 
-    .guide strong {
-      color: var(--text);
+    .empty-state.is-visible {
+      display: block;
     }
 
-    code {
-      padding: 2px 6px;
-      border-radius: 6px;
-      background: #f1f5f9;
-      color: #334155;
-      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-      font-size: 13px;
+    .empty-state strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: 18px;
     }
 
     footer {
-      margin-top: 48px;
+      margin-top: 76px;
+      padding: 30px 0 10px;
+      border-top: 1px solid rgba(77, 103, 116, 0.11);
       text-align: center;
-      color: var(--muted);
-      font-size: 14px;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        padding: 40px 16px 30px;
+    .footer-message {
+      margin: 0;
+      color: var(--ink);
+      font-size: 18px;
+      font-weight: 850;
+      letter-spacing: -0.03em;
+    }
+
+    .footer-copy {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 52px 42px 42px;
+      }
+
+      .research-card {
+        max-width: 520px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page-shell {
+        width: min(100% - 28px, 1120px);
+        padding-top: 22px;
+      }
+
+      .topbar-note {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        gap: 32px;
+        padding: 42px 26px 28px;
+        border-radius: 30px;
       }
 
       h1 {
-        font-size: 30px;
+        font-size: clamp(39px, 13vw, 56px);
       }
 
-      .description {
+      .hero-description {
         font-size: 15px;
       }
 
-      .post-item a {
-        padding: 22px;
+      .content-section {
+        padding-top: 52px;
+      }
+
+      .section-heading {
+        align-items: start;
+      }
+
+      .post-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .post-link {
+        min-height: 260px;
+      }
+
+      .category-tabs {
+        margin-right: -14px;
+        padding-right: 14px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .brand {
+        font-size: 14px;
+      }
+
+      .hero {
+        padding-inline: 21px;
+      }
+
+      .research-card {
+        padding: 24px 22px;
+      }
+
+      .progress-row {
+        grid-template-columns: 74px 1fr auto;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .result-count {
+        margin-top: 8px;
+      }
+
+      .post-link {
+        padding: 25px 23px 23px 28px;
       }
 
       .post-title {
-        font-size: 20px;
+        font-size: 21px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+
+    @supports not (color: color-mix(in srgb, white, black)) {
+      .post-item::after {
+        background: rgba(103, 162, 197, 0.12);
+      }
+
+      .post-category,
+      .post-arrow,
+      .tag {
+        color: #52758b;
+      }
+
+      .post-arrow,
+      .tag {
+        background: #eef6f8;
       }
     }
   </style>
 </head>
 
 <body>
-  <main class="container">
-    <header>
-      <span class="badge">Tech Blog</span>
-      <h1>Tech Growth Archive</h1>
-      <p class="description">
-        AWS, Azure, AI Agent, 아키텍처 설계와 개발 학습 내용을 차곡차곡 정리하는 공간입니다.
-      </p>
-    </header>
+  <div class="page-shell">
+    <div class="topbar">
+      <a class="brand" href="./index.html" aria-label="Hayoung Tech Log 홈">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+        </span>
+        <span>Hayoung Tech Log</span>
+      </a>
+      <p class="topbar-note">Learning by building · Growing by documenting</p>
+    </div>
 
-    <section aria-label="블로그 글 목록">
-      <ul class="post-list">
+    <main>
+      <header class="hero">
+        <div>
+          <span class="eyebrow">Tech Research Archive</span>
+          <h1>
+            Building systems,<br />
+            <span class="hero-highlight">one concept at a time.</span>
+          </h1>
+          <p class="hero-description">
+            AI Agent에서 시작해 Cloud, Architecture, Prompt Engineering,
+            Backend와 Frontend까지. 직접 공부하고 연결한 기술 개념을
+            나만의 언어로 기록하는 연구 노트입니다.
+          </p>
 
-        <li class="post-item">
-          <a href="./a2a-protocol.html">
-            <h2 class="post-title">A2A Protocol</h2>
-            <p class="post-summary">
-              AI Agent들이 서로를 발견하고 작업을 위임하며 협업하기 위한 A2A Protocol의 핵심 개념을 정리했습니다.
-            </p>
-            <div class="post-meta" aria-label="글 태그">
-              <span class="tag">A2A</span>
-              <span class="tag">AI Agent</span>
-              <span class="tag">MCP</span>
+          <div class="hero-keywords" aria-label="주요 학습 키워드">
+            <span class="hero-keyword">AI Agent</span>
+            <span class="hero-keyword">Multi-Agent</span>
+            <span class="hero-keyword">Cloud</span>
+            <span class="hero-keyword">Architecture</span>
+            <span class="hero-keyword">Prompt Engineering</span>
+          </div>
+        </div>
+
+        <aside class="research-card" aria-label="현재 학습 방향">
+          <p class="research-label">Current Direction</p>
+          <h2 class="research-title">AI를 중심으로 시스템 전체를 이해하기</h2>
+          <p class="research-copy">
+            특정 프레임워크 사용법에서 멈추지 않고, Agent가 실제 서비스 안에서
+            어떻게 설계되고 운영되는지까지 학습 범위를 확장합니다.
+          </p>
+
+          <div class="research-progress" aria-label="주요 테마 비중">
+            <div class="progress-row">
+              <span>AI Agent</span>
+              <span class="progress-track" aria-hidden="true"><span></span></span>
+              <span>Core</span>
             </div>
-          </a>
-        </li>
-
-        <li class="post-item">
-          <a href="./langgraph_devlog.html">
-            <h2 class="post-title">LangGraph 프레임워크 이론</h2>
-            <p class="post-summary">
-              LangGraph의 핵심 개념인 State, Node, Edge, Graph를 중심으로 Agent 실행 흐름을 구조적으로 이해한 내용을 정리했습니다.
-            </p>
-            <div class="post-meta" aria-label="글 태그">
-              <span class="tag">LangGraph</span>
-              <span class="tag">AI Agent</span>
-              <span class="tag">StateGraph</span>
+            <div class="progress-row">
+              <span>Architecture</span>
+              <span class="progress-track" aria-hidden="true"><span></span></span>
+              <span>Expand</span>
             </div>
-          </a>
-        </li>
-
-        <li class="post-item">
-          <a href="./langgraph_practice.html">
-            <h2 class="post-title">LangGraph 실전 학습</h2>
-            <p class="post-summary">
-              질문 유형 분류, weather / qa / chat 분기, RAG Loop 구조까지 직접 구현하기 위한 다음 학습 로드맵을 정리했습니다.
-            </p>
-            <div class="post-meta" aria-label="글 태그">
-              <span class="tag">LangGraph</span>
-              <span class="tag">Study Plan</span>
-              <span class="tag">RAG Loop</span>
+            <div class="progress-row">
+              <span>Platform</span>
+              <span class="progress-track" aria-hidden="true"><span></span></span>
+              <span>Next</span>
             </div>
-          </a>
-        </li>
+          </div>
+        </aside>
+      </header>
 
-        <li class="post-item">
-          <a href="./AWS Summit 2026 GenAI & AgentOps.html">
-            <h2 class="post-title">AgentOps 학습 정리</h2>
-            <p class="post-summary">
-              AI Agent 운영, 관찰 가능성, 비용 최적화, 멀티 에이전트 구조에 대한 학습 내용을 정리했습니다.
-            </p>
-            <div class="post-meta" aria-label="글 태그">
-              <span class="tag">AWS</span>
-              <span class="tag">AI Agent</span>
-              <span class="tag">Observability</span>
-              <span class="tag">학습 정리</span>
-            </div>
-          </a>
-        </li>
+      <section class="content-section" aria-labelledby="archiveTitle">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Research Notes</p>
+            <h2 class="section-title" id="archiveTitle">Explore concepts by domain</h2>
+          </div>
+          <p class="result-count" id="resultCount" aria-live="polite"></p>
+        </div>
 
-        <li class="post-item">
-          <a href="./azure-architecture.html">
-            <h2 class="post-title">Azure 기반 대체 아키텍처 설계</h2>
-            <p class="post-summary">
-              AWS에서 학습한 내용을 Azure 서비스로 대체할 때의 아키텍처와 제품 선택 기준을 정리했습니다.
-            </p>
-            <div class="post-meta" aria-label="글 태그">
-              <span class="tag">Azure</span>
-              <span class="tag">Architecture</span>
-              <span class="tag">Cloud</span>
-            </div>
-          </a>
-        </li>
+        <nav class="category-tabs" role="tablist" aria-label="Tech Log 테마 선택">
+          <button class="category-tab is-active" type="button" role="tab" aria-selected="true" data-filter="all">
+            전체
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-filter="ai-agent">
+            AI Agent
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-filter="cloud-architecture">
+            Cloud &amp; Architecture
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-filter="prompt-ai">
+            Prompt &amp; AI
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-filter="backend-platform">
+            Backend &amp; Platform
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-filter="frontend-web">
+            Frontend &amp; Web
+          </button>
+          <button class="category-tab" type="button" role="tab" aria-selected="false" data-filter="devops-observability">
+            DevOps &amp; Observability
+          </button>
+        </nav>
 
-        <li class="post-item">
-          <a href="./prompt-writing-guide.html">
-            <h2 class="post-title">프롬프트 작성 가이드</h2>
-            <p class="post-summary">
-              'AI시대의 질문력 프롬프트 엔지니어링' 책을 읽고 정리했습니다.
-            </p>
-            <div class="post-meta" aria-label="글 태그">
-              <span class="tag">AI</span>
-              <span class="tag">프롬프트 엔지니어링</span>
-              <span class="tag">프롬프트 패턴</span>
-            </div>
-          </a>
-        </li>
+        <ul class="post-grid" id="postList">
+          <li class="post-item" data-category="ai-agent" data-primary-theme="ai-agent">
+            <a class="post-link" href="./a2a-protocol.html">
+              <div class="post-topline">
+                <span class="post-category">AI Agent</span>
+                <span class="post-arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="post-title">A2A Protocol</h3>
+              <p class="post-summary">
+                AI Agent들이 서로를 발견하고 작업을 위임하며 협업하기 위한
+                A2A Protocol의 핵심 개념을 정리했습니다.
+              </p>
+              <div class="post-meta" aria-label="글 태그">
+                <span class="tag">A2A</span>
+                <span class="tag">AI Agent</span>
+                <span class="tag">MCP</span>
+              </div>
+            </a>
+          </li>
 
-        <li class="post-item">
-          <a href="./ai-agent-multi-agent-architecture-blog.html">
-            <h2 class="post-title">AI Agent 개념부터 멀티 에이전트 아키텍처까지</h2>
-            <p class="post-summary">
-              LLM의 한계에서 출발해 Single Agent, Multi-Agent, Pub/Sub, Queue, Azure 기반 운영 구조까지 한 번에 연결해서 이해하는 실전 설계 가이드
-            </p>
-            <div class="post-meta" aria-label="글 태그">
-              <span class="tag">AI Agent</span>
-              <span class="tag">Multi-Agent</span>
-              <span class="tag">Agent 구조</span>
-            </div>
-          </a>
-        </li>
-      </ul>
-    </section>
+          <li class="post-item" data-category="ai-agent" data-primary-theme="ai-agent">
+            <a class="post-link" href="./langgraph_devlog.html">
+              <div class="post-topline">
+                <span class="post-category">AI Agent</span>
+                <span class="post-arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="post-title">LangGraph 프레임워크 이론</h3>
+              <p class="post-summary">
+                State, Node, Edge, Graph를 중심으로 Agent 실행 흐름을
+                구조적으로 이해한 내용을 정리했습니다.
+              </p>
+              <div class="post-meta" aria-label="글 태그">
+                <span class="tag">LangGraph</span>
+                <span class="tag">StateGraph</span>
+                <span class="tag">Framework</span>
+              </div>
+            </a>
+          </li>
 
-    <!-- <aside class="guide">
-      <strong>새 글 추가 방법:</strong>
-      HTML 파일을 같은 폴더에 올린 뒤, 위의 <code>&lt;li class="post-item"&gt;</code> 블록을 복사해서
-      파일명, 제목, 설명, 태그만 바꾸면 됩니다.
-    </aside> -->
+          <li class="post-item" data-category="ai-agent" data-primary-theme="ai-agent">
+            <a class="post-link" href="./langgraph_practice.html">
+              <div class="post-topline">
+                <span class="post-category">AI Agent</span>
+                <span class="post-arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="post-title">LangGraph 실전 학습</h3>
+              <p class="post-summary">
+                질문 유형 분류와 weather / qa / chat 분기, RAG Loop 구조까지
+                직접 구현하기 위한 학습 로드맵입니다.
+              </p>
+              <div class="post-meta" aria-label="글 태그">
+                <span class="tag">LangGraph</span>
+                <span class="tag">Study Plan</span>
+                <span class="tag">RAG Loop</span>
+              </div>
+            </a>
+          </li>
+
+          <li
+            class="post-item"
+            data-category="ai-agent devops-observability cloud-architecture"
+            data-primary-theme="devops-observability"
+          >
+            <a class="post-link" href="./AWS Summit 2026 GenAI & AgentOps.html">
+              <div class="post-topline">
+                <span class="post-category">AgentOps</span>
+                <span class="post-arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="post-title">AgentOps 학습 정리</h3>
+              <p class="post-summary">
+                AI Agent 운영, 관찰 가능성, 비용 최적화와 멀티 에이전트
+                운영 구조에 대한 학습 내용을 정리했습니다.
+              </p>
+              <div class="post-meta" aria-label="글 태그">
+                <span class="tag">AWS</span>
+                <span class="tag">Observability</span>
+                <span class="tag">Operations</span>
+              </div>
+            </a>
+          </li>
+
+          <li
+            class="post-item"
+            data-category="cloud-architecture"
+            data-primary-theme="cloud-architecture"
+          >
+            <a class="post-link" href="./azure-architecture.html">
+              <div class="post-topline">
+                <span class="post-category">Cloud Architecture</span>
+                <span class="post-arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="post-title">Azure 기반 대체 아키텍처 설계</h3>
+              <p class="post-summary">
+                AWS에서 학습한 구조를 Azure 서비스로 대체할 때의 아키텍처와
+                제품 선택 기준을 정리했습니다.
+              </p>
+              <div class="post-meta" aria-label="글 태그">
+                <span class="tag">Azure</span>
+                <span class="tag">Architecture</span>
+                <span class="tag">Cloud</span>
+              </div>
+            </a>
+          </li>
+
+          <li class="post-item" data-category="prompt-ai" data-primary-theme="prompt-ai">
+            <a class="post-link" href="./prompt-writing-guide.html">
+              <div class="post-topline">
+                <span class="post-category">Prompt &amp; AI</span>
+                <span class="post-arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="post-title">프롬프트 작성 가이드</h3>
+              <p class="post-summary">
+                『AI 시대의 질문력 프롬프트 엔지니어링』을 읽고,
+                질문 구조와 프롬프트 패턴을 정리했습니다.
+              </p>
+              <div class="post-meta" aria-label="글 태그">
+                <span class="tag">AI</span>
+                <span class="tag">Prompt</span>
+                <span class="tag">Pattern</span>
+              </div>
+            </a>
+          </li>
+
+          <li
+            class="post-item"
+            data-category="ai-agent cloud-architecture"
+            data-primary-theme="cloud-architecture"
+          >
+            <a class="post-link" href="./ai-agent-multi-agent-architecture-blog.html">
+              <div class="post-topline">
+                <span class="post-category">AI Architecture</span>
+                <span class="post-arrow" aria-hidden="true">↗</span>
+              </div>
+              <h3 class="post-title">AI Agent 개념부터 멀티 에이전트 아키텍처까지</h3>
+              <p class="post-summary">
+                LLM의 한계에서 출발해 Single Agent, Multi-Agent, Pub/Sub,
+                Queue와 Azure 운영 구조까지 연결한 실전 설계 가이드입니다.
+              </p>
+              <div class="post-meta" aria-label="글 태그">
+                <span class="tag">Multi-Agent</span>
+                <span class="tag">Pub/Sub</span>
+                <span class="tag">System Design</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+
+        <div class="empty-state" id="emptyState" role="status">
+          <strong>아직 이 테마의 기록이 없습니다.</strong>
+          새로운 학습을 시작하면 이 공간에 하나씩 채워보세요.
+        </div>
+      </section>
+    </main>
 
     <footer>
-      <p>© 2026 Hayoung Tech Blog. All notes are continuously updated.</p>
+      <p class="footer-message">Keep learning. Keep building.</p>
+      <p class="footer-copy">© 2026 Hayoung Tech Log · All notes are continuously updated.</p>
     </footer>
-  </main>
-</body>
+  </div>
 
+  <script>
+    const tabs = Array.from(document.querySelectorAll(".category-tab"));
+    const posts = Array.from(document.querySelectorAll(".post-item"));
+    const resultCount = document.getElementById("resultCount");
+    const emptyState = document.getElementById("emptyState");
+
+    function filterPosts(category) {
+      let visibleCount = 0;
+
+      posts.forEach((post) => {
+        const categories = post.dataset.category.trim().split(/\s+/);
+        const shouldShow = category === "all" || categories.includes(category);
+
+        post.hidden = !shouldShow;
+
+        if (shouldShow) {
+          visibleCount += 1;
+        }
+      });
+
+      resultCount.textContent = `${visibleCount}개의 기록`;
+      emptyState.classList.toggle("is-visible", visibleCount === 0);
+    }
+
+    function activateTab(selectedTab) {
+      tabs.forEach((tab) => {
+        const isActive = tab === selectedTab;
+        tab.classList.toggle("is-active", isActive);
+        tab.setAttribute("aria-selected", String(isActive));
+        tab.setAttribute("tabindex", isActive ? "0" : "-1");
+      });
+
+      filterPosts(selectedTab.dataset.filter);
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => activateTab(tab));
+
+      tab.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+          return;
+        }
+
+        event.preventDefault();
+
+        let targetIndex = index;
+
+        if (event.key === "ArrowRight") targetIndex = (index + 1) % tabs.length;
+        if (event.key === "ArrowLeft") targetIndex = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === "Home") targetIndex = 0;
+        if (event.key === "End") targetIndex = tabs.length - 1;
+
+        tabs[targetIndex].focus();
+        activateTab(tabs[targetIndex]);
+      });
+    });
+
+    activateTab(tabs[0]);
+  </script>
+</body>
 </html>
