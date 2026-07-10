@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="서로 다른 AI Agent가 발견되고, 작업을 위임하며, 결과를 주고받을 수 있도록 하는 A2A(Agent2Agent) Protocol의 개념과 MCP와의 차이를 설명합니다." name="description"/>
+<meta content="A2A, Agent2Agent, AI Agent, Multi Agent, MCP, LangGraph, Agent Protocol" name="keywords"/>
+<title>A2A Protocol이란? AI Agent 간 협업을 위한 공통 언어</title>
+<style>
+    :root {
+      --background: #f7f8fa;
+      --surface: #ffffff;
+      --surface-soft: #f2f5f9;
+      --text-primary: #1d2530;
+      --text-secondary: #5c6775;
+      --border: #dde3ea;
+      --accent: #2563eb;
+      --accent-soft: #eaf1ff;
+      --green-soft: #e8f7f1;
+      --orange-soft: #fff2e4;
+      --purple-soft: #f1edff;
+      --code-background: #18202b;
+      --code-text: #e6edf6;
+      --shadow: 0 12px 32px rgba(30, 41, 59, 0.08);
+      --radius-large: 22px;
+      --radius-medium: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text-primary);
+      font-family:
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      font-size: 17px;
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+
+    .page {
+      width: min(100% - 32px, 880px);
+      margin: 0 auto;
+      padding: 56px 0 100px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 58px 48px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      background:
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.17), transparent 35%),
+        linear-gradient(145deg, #ffffff, #f2f6ff);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "A2A";
+      position: absolute;
+      right: 30px;
+      bottom: -52px;
+      color: rgba(37, 99, 235, 0.06);
+      font-size: 150px;
+      font-weight: 900;
+      letter-spacing: -8px;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.35;
+      letter-spacing: -0.035em;
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0;
+      font-size: clamp(34px, 6vw, 52px);
+    }
+
+    h2 {
+      margin: 0 0 24px;
+      font-size: 30px;
+    }
+
+    h3 {
+      margin: 34px 0 14px;
+      font-size: 22px;
+    }
+
+    p {
+      margin: 0 0 20px;
+    }
+
+    strong {
+      color: #101828;
+    }
+
+    ul {
+      margin: 16px 0 24px;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 9px 0;
+    }
+
+    .hero-description {
+      position: relative;
+      z-index: 1;
+      max-width: 670px;
+      margin: 24px 0 0;
+      color: var(--text-secondary);
+      font-size: 19px;
+    }
+
+    .hero-meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .tag {
+      padding: 6px 11px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .content {
+      margin-top: 46px;
+      padding: 48px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    section + section {
+      margin-top: 76px;
+    }
+
+    .lead {
+      color: #354152;
+      font-size: 19px;
+    }
+
+    .highlight {
+      margin: 30px 0;
+      padding: 24px 26px;
+      border-left: 5px solid var(--accent);
+      border-radius: 0 var(--radius-medium) var(--radius-medium) 0;
+      background: var(--accent-soft);
+      color: #233a67;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .note {
+      margin: 28px 0;
+      padding: 22px 24px;
+      border: 1px solid #cce9dc;
+      border-radius: var(--radius-medium);
+      background: var(--green-soft);
+      color: #18563f;
+    }
+
+    .warning {
+      margin: 28px 0;
+      padding: 22px 24px;
+      border: 1px solid #f0d1ad;
+      border-radius: var(--radius-medium);
+      background: var(--orange-soft);
+      color: #76400d;
+    }
+
+    .assumption-grid,
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: var(--surface-soft);
+    }
+
+    .card-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .card h3 {
+      margin: 0 0 9px;
+      font-size: 19px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .architecture {
+      overflow-x: auto;
+      margin: 32px 0;
+      padding: 32px 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: #fbfcfe;
+    }
+
+    .architecture pre {
+      min-width: 590px;
+      margin: 0;
+      color: #334155;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 14px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    pre.code {
+      overflow-x: auto;
+      margin: 24px 0;
+      padding: 25px;
+      border-radius: var(--radius-medium);
+      background: var(--code-background);
+      color: var(--code-text);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      word-break: normal;
+    }
+
+    p code, li code, td code {
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #eef1f5;
+      color: #38465a;
+      font-size: 0.9em;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      margin: 30px 0;
+    }
+
+    .flow-item {
+      display: grid;
+      grid-template-columns: 45px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 17px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: #ffffff;
+    }
+
+    .flow-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .flow-item strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .flow-item span {
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 28px 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+    }
+
+    table {
+      width: 100%;
+      min-width: 650px;
+      border-collapse: collapse;
+      background: var(--surface);
+    }
+
+    th, td {
+      padding: 17px 18px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-soft);
+      color: #344054;
+      font-size: 14px;
+    }
+
+    td {
+      color: #4b5565;
+      font-size: 15px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 18px;
+      align-items: stretch;
+      margin: 30px 0;
+    }
+
+    .comparison-card {
+      padding: 28px;
+      border-radius: var(--radius-medium);
+    }
+
+    .comparison-card.mcp {
+      border: 1px solid #d9d0fa;
+      background: var(--purple-soft);
+    }
+
+    .comparison-card.a2a {
+      border: 1px solid #c8d9ff;
+      background: var(--accent-soft);
+    }
+
+    .comparison-card h3 {
+      margin: 0 0 14px;
+    }
+
+    .comparison-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .plus {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 26px;
+    }
+
+    .summary-box {
+      padding: 30px;
+      border-radius: var(--radius-medium);
+      background: #172033;
+      color: #e5ebf5;
+    }
+
+    .summary-box h2 {
+      margin-bottom: 18px;
+      color: #ffffff;
+    }
+
+    .summary-box p {
+      color: #c7d0df;
+    }
+
+    .summary-box strong {
+      color: #ffffff;
+    }
+
+    .summary-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-align: center;
+    }
+
+
+    .diagram {
+      display: grid;
+      gap: 18px;
+      margin: 32px 0;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: #fbfcfe;
+    }
+
+    .diagram-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .diagram-node {
+      min-width: 150px;
+      padding: 16px 18px;
+      border: 1px solid #cfd8e3;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 5px 14px rgba(15, 23, 42, 0.06);
+      text-align: center;
+    }
+
+    .diagram-node.primary {
+      border-color: #a9c1ff;
+      background: var(--accent-soft);
+    }
+
+    .diagram-node.secondary {
+      background: var(--surface-soft);
+    }
+
+    .diagram-title {
+      display: block;
+      color: #1f2937;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .diagram-subtitle {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .diagram-arrow {
+      color: var(--accent);
+      font-size: 25px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .diagram-arrow.vertical {
+      width: 100%;
+      text-align: center;
+    }
+
+    .diagram-branch {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .diagram-branch.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .diagram-label {
+      margin: -4px 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .diagram-stack {
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        font-size: 16px;
+      }
+
+      .page {
+        width: min(100% - 20px, 880px);
+        padding-top: 20px;
+      }
+
+      .hero,
+      .content {
+        padding: 30px 22px;
+      }
+
+      .hero::after {
+        display: none;
+      }
+
+      .hero-description {
+        font-size: 17px;
+      }
+
+      section + section {
+        margin-top: 58px;
+      }
+
+      h2 {
+        font-size: 26px;
+      }
+
+      .assumption-grid,
+      .concept-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram {
+        padding: 22px 16px;
+      }
+
+      .diagram-row {
+        flex-direction: column;
+      }
+
+      .diagram-arrow:not(.vertical) {
+        transform: rotate(90deg);
+      }
+
+      .diagram-branch,
+      .diagram-branch.two {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram-node {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .plus {
+        min-height: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">AI Agent Architecture</div>
+<h1>
+        A2A Protocol이란?<br/>
+        AI Agent 간 협업을 위한 공통 언어
+      </h1>
+<p class="hero-description">
+        서로 다른 회사와 프레임워크에서 만들어진 AI Agent는
+        어떻게 상대방의 능력을 찾고, 작업을 위임하며,
+        진행 상태와 결과를 주고받을 수 있을까?
+        A2A Protocol의 등장 배경부터 핵심 개념,
+        MCP와의 차이까지 정리해 보았다.
+      </p>
+<div aria-label="게시글 태그" class="hero-meta">
+<span class="tag">A2A</span>
+<span class="tag">AI Agent</span>
+<span class="tag">Multi Agent</span>
+<span class="tag">MCP</span>
+<span class="tag">LangGraph</span>
+</div>
+</header>
+<article class="content">
+<section>
+<h2>1. A2A Protocol이란?</h2>
+<p class="lead">
+<strong>A2A</strong>는
+          <strong>Agent2Agent Protocol</strong>의 약자로,
+          서로 독립적으로 구현된 AI Agent들이
+          표준화된 방법으로 통신하고 협업할 수 있도록 만든
+          개방형 프로토콜이다.
+        </p>
+<p>
+          Agent마다 사용한 언어, 프레임워크, 모델,
+          실행 환경이 다르더라도 A2A 규칙을 지원하면
+          상대 Agent의 내부 구현을 알지 못한 채
+          메시지를 보내고 작업을 위임할 수 있다.
+        </p>
+<div class="highlight">
+          REST API가 서비스와 서비스 간 통신 방식을 정리했다면,
+          A2A는 Agent가 다른 Agent를 발견하고 협업하는 방식을
+          표준화한다고 이해할 수 있다.
+        </div>
+<p>
+          다만 A2A는 HTTP를 대체하는 새로운 네트워크 기술이라기보다,
+          HTTP, JSON, 스트리밍과 같은 기존 웹 기술 위에서
+          Agent 간 상호작용 모델을 정의하는 프로토콜에 가깝다.
+        </p>
+</section>
+<section>
+<h2>2. 왜 A2A가 필요할까?</h2>
+<p>
+          초기의 LLM 애플리케이션은 하나의 모델이
+          API, 데이터베이스, 검색 도구를 직접 호출하는 구조가 많았다.
+        </p>
+<div aria-label="단일 Agent 구조" class="diagram">
+<div class="diagram-stack">
+<div class="diagram-node primary">
+<span class="diagram-title">사용자</span>
+<span class="diagram-subtitle">요청 전달</span>
+</div>
+<div class="diagram-arrow vertical">↓</div>
+<div class="diagram-node primary">
+<span class="diagram-title">단일 Agent</span>
+<span class="diagram-subtitle">판단 및 도구 호출</span>
+</div>
+<div class="diagram-arrow vertical">↓</div>
+</div>
+<div class="diagram-branch">
+<div class="diagram-node secondary"><span class="diagram-title">검색</span></div>
+<div class="diagram-node secondary"><span class="diagram-title">데이터베이스</span></div>
+<div class="diagram-node secondary"><span class="diagram-title">외부 API</span></div>
+</div>
+</div>
+<p>
+          하지만 업무가 복잡해지면서 하나의 Agent가
+          모든 책임을 갖는 방식에는 한계가 생겼다.
+          최근에는 각 Agent가 특정 전문 영역을 담당하고,
+          여러 Agent가 협력하여 하나의 목표를 수행하는
+          멀티 Agent 구조가 사용되고 있다.
+        </p>
+<div aria-label="멀티 Agent 구조" class="diagram">
+<div class="diagram-stack">
+<div class="diagram-node primary"><span class="diagram-title">사용자 요청</span></div>
+<div class="diagram-arrow vertical">↓</div>
+<div class="diagram-node primary">
+<span class="diagram-title">Planner Agent</span>
+<span class="diagram-subtitle">작업 분해 및 위임</span>
+</div>
+<div class="diagram-arrow vertical">↓</div>
+<div class="diagram-label">전문 Agent에게 작업 위임</div>
+</div>
+<div class="diagram-branch">
+<div class="diagram-node">
+<span class="diagram-title">Search Agent</span>
+<span class="diagram-subtitle">LangGraph</span>
+</div>
+<div class="diagram-node">
+<span class="diagram-title">Data Agent</span>
+<span class="diagram-subtitle">CrewAI</span>
+</div>
+<div class="diagram-node">
+<span class="diagram-title">Report Agent</span>
+<span class="diagram-subtitle">직접 구현</span>
+</div>
+</div>
+</div>
+<ul>
+<li>서로 다른 프로그래밍 언어로 개발될 수 있다.</li>
+<li>LangGraph, CrewAI, ADK 등 서로 다른 프레임워크를 사용할 수 있다.</li>
+<li>각자 다른 API 요청과 응답 형식을 사용할 수 있다.</li>
+<li>작업 상태와 오류를 표현하는 방식도 다를 수 있다.</li>
+<li>다른 Agent가 어떤 일을 할 수 있는지 알기 어렵다.</li>
+</ul>
+<pre class="code"><code>if agent_type == "weather":
+    call_weather_api()
+
+elif agent_type == "search":
+    call_search_api()
+
+elif agent_type == "report":
+    call_report_api()</code></pre>
+<p>
+          Agent가 추가될 때마다 조건과 전용 API 연동이 늘어난다면
+          시스템은 빠르게 복잡해진다.
+          A2A는 이러한 연결 방식을 공통 규칙으로 정리하려는 시도다.
+        </p>
+</section>
+<section>
+<h2>3. 제1원칙으로 다시 보는 A2A</h2>
+<div class="assumption-grid">
+<div class="card">
+<div class="card-number">01</div>
+<h3>같은 프레임워크여야 한다</h3>
+<p>
+              물리적인 제약이 아니다.
+              통신 규격만 일치하면 Agent 내부의 프레임워크는 서로 달라도 된다.
+            </p>
+</div>
+<div class="card">
+<div class="card-number">02</div>
+<h3>상대의 내부 로직을 알아야 한다</h3>
+<p>
+              반드시 그렇지 않다.
+              외부에는 제공 가능한 능력과 입출력 규칙만 공개하면 된다.
+            </p>
+</div>
+<div class="card">
+<div class="card-number">03</div>
+<h3>작업은 즉시 응답해야 한다</h3>
+<p>
+              보고서 생성이나 예약 처리처럼 오래 걸리는 작업도 있으므로
+              상태를 가진 비동기 작업 모델이 필요하다.
+            </p>
+</div>
+<div class="card">
+<div class="card-number">04</div>
+<h3>모든 Agent API를 미리 알아야 한다</h3>
+<p>
+              Agent가 자신의 능력을 기계가 읽을 수 있는 형태로 공개하면,
+              Client Agent가 적합한 협업 대상을 찾을 수 있다.
+            </p>
+</div>
+</div>
+<div class="note">
+<strong>A2A의 본질</strong><br/>
+          Agent의 내부 구현을 통일하는 것이 아니라,
+          서로 다른 Agent들이 협업하는 외부 경계의 규칙을 통일하는 것이다.
+        </div>
+</section>
+<section>
+<h2>4. A2A의 기본 참여자</h2>
+<div class="concept-grid">
+<div class="card">
+<div class="card-number">C</div>
+<h3>A2A Client</h3>
+<p>
+              다른 Agent에게 메시지를 보내거나 작업을 요청하는 쪽이다.
+              Planner 또는 Supervisor Agent가 Client 역할을 맡을 수 있다.
+            </p>
+</div>
+<div class="card">
+<div class="card-number">S</div>
+<h3>A2A Server</h3>
+<p>
+              자신의 능력을 외부에 공개하고,
+              Client가 전달한 요청을 처리하는 Remote Agent다.
+            </p>
+</div>
+</div>
+</section>
+<section>
+<h2>5. A2A 핵심 개념</h2>
+<h3>5.1 Agent Card</h3>
+<p>
+<strong>Agent Card</strong>는 Agent가 자신의 정보와 능력을
+          외부에 설명하기 위한 메타데이터 문서다.
+        </p>
+<pre class="code"><code>{
+  "name": "Weather Analysis Agent",
+  "description": "지역별 현재 날씨와 예보를 분석합니다.",
+  "url": "https://agent.example.com/a2a",
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": true
+  },
+  "skills": [
+    {
+      "id": "weather-forecast",
+      "name": "날씨 예보 조회",
+      "description": "지역과 날짜를 기준으로 날씨를 조회합니다.",
+      "tags": ["weather", "forecast"]
+    }
+  ]
+}</code></pre>
+<h3>5.2 Skill</h3>
+<p>
+<strong>Skill</strong>은 해당 Agent가 제공할 수 있는
+          구체적인 능력을 의미한다.
+        </p>
+<ul>
+<li>현재 날씨 조회</li>
+<li>주간 예보 조회</li>
+<li>강수 가능성 분석</li>
+<li>날씨 기반 외출 추천</li>
+</ul>
+<h3>5.3 Message</h3>
+<p>
+<strong>Message</strong>는 Agent 간 대화의 기본 단위다.
+          텍스트뿐만 아니라 파일, 구조화된 데이터 등도 포함할 수 있다.
+        </p>
+<pre class="code"><code>{
+  "role": "user",
+  "parts": [
+    {
+      "kind": "text",
+      "text": "서울의 이번 주말 날씨를 분석해 줘."
+    }
+  ]
+}</code></pre>
+<h3>5.4 Task</h3>
+<p>
+<strong>Task</strong>는 상태를 가지고 추적할 필요가 있는
+          작업 단위다.
+        </p>
+<pre class="code"><code>{
+  "id": "task-20260710-001",
+  "contextId": "weather-context-001",
+  "status": {
+    "state": "working"
+  },
+  "artifacts": []
+}</code></pre>
+<h3>5.5 Task Status</h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+<th>상태 예시</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr><td><code>submitted</code></td><td>작업이 제출된 상태</td></tr>
+<tr><td><code>working</code></td><td>Agent가 작업을 수행 중인 상태</td></tr>
+<tr><td><code>input-required</code></td><td>추가 정보가 필요한 상태</td></tr>
+<tr><td><code>auth-required</code></td><td>추가 인증이 필요한 상태</td></tr>
+<tr><td><code>completed</code></td><td>작업이 완료된 상태</td></tr>
+<tr><td><code>failed</code></td><td>작업 처리에 실패한 상태</td></tr>
+<tr><td><code>canceled</code></td><td>작업이 취소된 상태</td></tr>
+</tbody>
+</table>
+</div>
+<h3>5.6 Artifact</h3>
+<p>
+<strong>Artifact</strong>는 Task를 처리하면서 Agent가 생성한
+          결과물이다.
+        </p>
+<pre class="code"><code>{
+  "artifactId": "artifact-weather-report",
+  "name": "주말 날씨 분석 보고서",
+  "parts": [
+    {
+      "kind": "text",
+      "text": "토요일은 흐리고 일요일 오후에는 비가 예상됩니다."
+    }
+  ]
+}</code></pre>
+<div class="warning">
+          Message는 Agent 간 대화나 요청을 표현하고,
+          Artifact는 Task 수행으로 생성된 결과물을 표현한다.
+        </div>
+</section>
+<section>
+<h2>6. 전체 동작 흐름</h2>
+<div class="flow">
+<div class="flow-item">
+<div class="flow-number">1</div>
+<div>
+<strong>사용자 요청 수신</strong>
+<span>“이번 주말 야외 활동이 가능한지 알려줘.”</span>
+</div>
+</div>
+<div class="flow-item">
+<div class="flow-number">2</div>
+<div>
+<strong>Agent 검색 및 능력 확인</strong>
+<span>Planner가 Agent Card를 읽어 Weather Skill을 확인한다.</span>
+</div>
+</div>
+<div class="flow-item">
+<div class="flow-number">3</div>
+<div>
+<strong>Message 전송</strong>
+<span>지역과 날짜가 포함된 요청 메시지를 전달한다.</span>
+</div>
+</div>
+<div class="flow-item">
+<div class="flow-number">4</div>
+<div>
+<strong>Task 생성</strong>
+<span>Weather Agent가 상태 추적이 필요한 작업으로 판단한다.</span>
+</div>
+</div>
+<div class="flow-item">
+<div class="flow-number">5</div>
+<div>
+<strong>진행 상태 전달</strong>
+<span>submitted, working 등의 상태를 Client에 전달한다.</span>
+</div>
+</div>
+<div class="flow-item">
+<div class="flow-number">6</div>
+<div>
+<strong>Artifact 생성</strong>
+<span>주말 날씨와 외출 추천이 포함된 결과물을 생성한다.</span>
+</div>
+</div>
+<div class="flow-item">
+<div class="flow-number">7</div>
+<div>
+<strong>최종 응답 구성</strong>
+<span>Planner가 결과를 사용자에게 이해하기 쉬운 형태로 전달한다.</span>
+</div>
+</div>
+</div>
+</section>
+<section>
+<h2>7. 일반 REST API와 무엇이 다를까?</h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>일반 REST API</th>
+<th>A2A Protocol</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>주요 대상</td><td>서비스와 서비스</td><td>Agent와 Agent</td></tr>
+<tr><td>요청 성격</td><td>정의된 기능 호출</td><td>목표 또는 작업 위임</td></tr>
+<tr><td>능력 탐색</td><td>API 문서를 사람이 확인</td><td>Agent Card와 Skill을 기계가 확인</td></tr>
+<tr><td>작업 모델</td><td>요청과 응답 중심</td><td>상태를 가진 장기 실행 Task 지원</td></tr>
+<tr><td>결과 표현</td><td>서비스별 응답 DTO</td><td>Message와 Artifact</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section>
+<h2>8. MCP와 A2A의 차이</h2>
+<div class="comparison">
+<div class="comparison-card mcp">
+<h3>MCP</h3>
+<p>
+              Agent 또는 LLM 애플리케이션이
+              외부의 Tool, 데이터, 리소스를 사용하는 방식을 표준화한다.
+            </p>
+<p><strong>Agent ↔ Tool</strong></p>
+</div>
+<div class="plus">+</div>
+<div class="comparison-card a2a">
+<h3>A2A</h3>
+<p>
+              독립적인 Agent들이 서로를 발견하고,
+              메시지와 작업을 주고받는 방식을 표준화한다.
+            </p>
+<p><strong>Agent ↔ Agent</strong></p>
+</div>
+</div>
+<div aria-label="MCP와 A2A 조합 구조" class="diagram">
+<div class="diagram-stack">
+<div class="diagram-node primary">
+<span class="diagram-title">Planner Agent</span>
+</div>
+<div class="diagram-arrow vertical">↓</div>
+<div class="diagram-label">A2A</div>
+<div class="diagram-arrow vertical">↓</div>
+<div class="diagram-node primary">
+<span class="diagram-title">Weather Agent</span>
+</div>
+<div class="diagram-arrow vertical">↓</div>
+<div class="diagram-label">MCP</div>
+<div class="diagram-arrow vertical">↓</div>
+<div class="diagram-node secondary">
+<span class="diagram-title">Weather API / DB</span>
+</div>
+</div>
+</div>
+<div class="highlight">
+          MCP와 A2A는 경쟁 관계라기보다 서로 다른 경계를 담당하는
+          상호 보완적인 프로토콜이다.
+        </div>
+</section>
+<section>
+<h2>9. LangGraph 구조에 적용하면</h2>
+<div aria-label="A2A 기반 Agent 구조" class="diagram">
+<div class="diagram-stack">
+<div class="diagram-node primary">
+<span class="diagram-title">Supervisor Agent</span>
+<span class="diagram-subtitle">LangGraph</span>
+</div>
+<div class="diagram-arrow vertical">↓</div>
+<div class="diagram-label">A2A</div>
+</div>
+<div class="diagram-branch">
+<div class="diagram-node">
+<span class="diagram-title">Search Agent</span>
+<span class="diagram-subtitle">LangGraph</span>
+</div>
+<div class="diagram-node">
+<span class="diagram-title">Weather Agent</span>
+<span class="diagram-subtitle">Google ADK</span>
+</div>
+<div class="diagram-node">
+<span class="diagram-title">Report Agent</span>
+<span class="diagram-subtitle">CrewAI</span>
+</div>
+</div>
+</div>
+<div class="note">
+<strong>구분 기준</strong><br/>
+          같은 프로세스 안에서 State와 실행 흐름을 공유한다면
+          LangGraph Node에 가깝다.
+          독립적으로 배포되고 자체 판단과 도구를 가진 실행 주체라면
+          A2A Agent로 분리하는 방안을 고려할 수 있다.
+        </div>
+</section>
+<section>
+<h2>10. 모든 Node를 Agent로 분리해야 할까?</h2>
+<ul>
+<li>독립적인 목표와 책임 범위를 가진다.</li>
+<li>자체 모델, 메모리 또는 Tool을 사용한다.</li>
+<li>다른 서비스에서도 재사용할 필요가 있다.</li>
+<li>독립적인 배포와 확장이 필요하다.</li>
+<li>처리 시간이 길어 상태 추적이 필요하다.</li>
+<li>다른 조직이나 외부 업체가 운영한다.</li>
+</ul>
+<div class="warning">
+          모든 기능을 Agent로 분리하면 네트워크 지연,
+          인증과 권한 관리, 장애 지점, 관측성,
+          비용 및 디버깅 난도가 함께 증가한다.
+        </div>
+</section>
+<section>
+<h2>11. 실무 적용 시 고려할 점</h2>
+<h3>보안과 신뢰</h3>
+<p>인증, 인가, 암호화, 네트워크 접근 정책을 함께 설계해야 한다.</p>
+<h3>Task 멱등성</h3>
+<p>동일한 요청이 재전송되어도 결제나 예약이 중복 실행되지 않도록 해야 한다.</p>
+<h3>Timeout과 취소</h3>
+<p>Timeout, Task 취소, 재시도, 보상 트랜잭션 정책이 필요하다.</p>
+<h3>관측성</h3>
+<p>Task ID와 Context ID를 기준으로 로그, 메트릭, Trace를 연결해야 한다.</p>
+<h3>권한 범위</h3>
+<p>작업별 최소 권한과 사용자 승인을 적용해야 한다.</p>
+</section>
+<section>
+<h2>12. 정리</h2>
+<div class="summary-box">
+<h2>A2A의 핵심은 협업 경계의 표준화다.</h2>
+<p>
+<strong>A2A Protocol</strong>은 서로 다른 환경에서 동작하는
+            AI Agent가 상대방의 내부 구현을 알지 못하더라도
+            능력을 확인하고, 메시지를 교환하며,
+            상태를 가진 작업과 결과물을 주고받을 수 있도록 한다.
+          </p>
+<p>
+<strong>Agent Card</strong>는 Agent의 능력을 설명하고,
+            <strong>Message</strong>는 대화를 전달하며,
+            <strong>Task</strong>는 상태를 가진 작업을 관리하고,
+            <strong>Artifact</strong>는 작업 결과물을 표현한다.
+          </p>
+<p>
+            MCP가 Agent와 Tool 사이의 연결을 담당한다면,
+            A2A는 Agent와 Agent 사이의 연결을 담당한다.
+          </p>
+</div>
+<div class="highlight">
+          REST API가 서비스의 기능을 호출하는 규칙이라면,
+          A2A는 자율적인 Agent에게 목표를 맡기고 협업하는 규칙이다.
+        </div>
+</section>
+</article>
+<footer class="footer">
+<p>본 글은 도서 'AI 에이전트 생태계'를 읽으며 A2A Protocol 개념을 정리한 기록입니다.</p>
+</footer>
+</main>
+</body>
+</html>
