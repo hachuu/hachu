@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="AI 시대에 개발자와 인간에게 남는 역할을 Direction, Problem Framing, Judgment, Alignment, Accountability 관점에서 정리한 Work Log입니다." name="description"/>
+<meta content="AI Agent, Future of Work, Developer, Human Role, Problem Framing, Judgment, Orchestration" name="keywords"/>
+<title>AI 시대, 개발자의 업은 무엇인가 | Human Role in AI Era</title>
+<style>
+    :root {
+      --background: #f7f8fa;
+      --surface: #ffffff;
+      --surface-soft: #f2f5f9;
+      --text-primary: #1d2530;
+      --text-secondary: #5c6775;
+      --border: #dde3ea;
+      --accent: #2563eb;
+      --accent-soft: #eaf1ff;
+      --green-soft: #e8f7f1;
+      --orange-soft: #fff2e4;
+      --purple-soft: #f1edff;
+      --code-background: #18202b;
+      --code-text: #e6edf6;
+      --shadow: 0 12px 32px rgba(30, 41, 59, 0.08);
+      --radius-large: 22px;
+      --radius-medium: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text-primary);
+      font-family:
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      font-size: 17px;
+      line-height: 1.8;
+      word-break: keep-all;
+    }
+
+    .page {
+      width: min(100% - 32px, 880px);
+      margin: 0 auto;
+      padding: 56px 0 100px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 58px 48px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      background:
+        radial-gradient(circle at top right, rgba(37, 99, 235, 0.17), transparent 35%),
+        linear-gradient(145deg, #ffffff, #f2f6ff);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "HUMAN";
+      position: absolute;
+      right: 30px;
+      bottom: -52px;
+      color: rgba(37, 99, 235, 0.06);
+      font-size: 150px;
+      font-weight: 900;
+      letter-spacing: -8px;
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 18px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.35;
+      letter-spacing: -0.035em;
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0;
+      font-size: clamp(34px, 6vw, 52px);
+    }
+
+    h2 {
+      margin: 0 0 24px;
+      font-size: 30px;
+    }
+
+    h3 {
+      margin: 34px 0 14px;
+      font-size: 22px;
+    }
+
+    p {
+      margin: 0 0 20px;
+    }
+
+    strong {
+      color: #101828;
+    }
+
+    ul {
+      margin: 16px 0 24px;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 9px 0;
+    }
+
+    .hero-description {
+      position: relative;
+      z-index: 1;
+      max-width: 670px;
+      margin: 24px 0 0;
+      color: var(--text-secondary);
+      font-size: 19px;
+    }
+
+    .hero-meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 28px;
+    }
+
+    .tag {
+      padding: 6px 11px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .content {
+      margin-top: 46px;
+      padding: 48px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-large);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    section + section {
+      margin-top: 76px;
+    }
+
+    .lead {
+      color: #354152;
+      font-size: 19px;
+    }
+
+    .highlight {
+      margin: 30px 0;
+      padding: 24px 26px;
+      border-left: 5px solid var(--accent);
+      border-radius: 0 var(--radius-medium) var(--radius-medium) 0;
+      background: var(--accent-soft);
+      color: #233a67;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .note {
+      margin: 28px 0;
+      padding: 22px 24px;
+      border: 1px solid #cce9dc;
+      border-radius: var(--radius-medium);
+      background: var(--green-soft);
+      color: #18563f;
+    }
+
+    .warning {
+      margin: 28px 0;
+      padding: 22px 24px;
+      border: 1px solid #f0d1ad;
+      border-radius: var(--radius-medium);
+      background: var(--orange-soft);
+      color: #76400d;
+    }
+
+    .assumption-grid,
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: var(--surface-soft);
+    }
+
+    .card-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 16px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .card h3 {
+      margin: 0 0 9px;
+      font-size: 19px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .architecture {
+      overflow-x: auto;
+      margin: 32px 0;
+      padding: 32px 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: #fbfcfe;
+    }
+
+    .architecture pre {
+      min-width: 590px;
+      margin: 0;
+      color: #334155;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 14px;
+      line-height: 1.65;
+      text-align: center;
+    }
+
+    pre.code {
+      overflow-x: auto;
+      margin: 24px 0;
+      padding: 25px;
+      border-radius: var(--radius-medium);
+      background: var(--code-background);
+      color: var(--code-text);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      word-break: normal;
+    }
+
+    p code, li code, td code {
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #eef1f5;
+      color: #38465a;
+      font-size: 0.9em;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      margin: 30px 0;
+    }
+
+    .flow-item {
+      display: grid;
+      grid-template-columns: 45px 1fr;
+      gap: 16px;
+      align-items: center;
+      padding: 17px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: #ffffff;
+    }
+
+    .flow-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .flow-item strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .flow-item span {
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 28px 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+    }
+
+    table {
+      width: 100%;
+      min-width: 650px;
+      border-collapse: collapse;
+      background: var(--surface);
+    }
+
+    th, td {
+      padding: 17px 18px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-soft);
+      color: #344054;
+      font-size: 14px;
+    }
+
+    td {
+      color: #4b5565;
+      font-size: 15px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 18px;
+      align-items: stretch;
+      margin: 30px 0;
+    }
+
+    .comparison-card {
+      padding: 28px;
+      border-radius: var(--radius-medium);
+    }
+
+    .comparison-card.mcp {
+      border: 1px solid #d9d0fa;
+      background: var(--purple-soft);
+    }
+
+    .comparison-card.a2a {
+      border: 1px solid #c8d9ff;
+      background: var(--accent-soft);
+    }
+
+    .comparison-card h3 {
+      margin: 0 0 14px;
+    }
+
+    .comparison-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .plus {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 26px;
+    }
+
+    .summary-box {
+      padding: 30px;
+      border-radius: var(--radius-medium);
+      background: #172033;
+      color: #e5ebf5;
+    }
+
+    .summary-box h2 {
+      margin-bottom: 18px;
+      color: #ffffff;
+    }
+
+    .summary-box p {
+      color: #c7d0df;
+    }
+
+    .summary-box strong {
+      color: #ffffff;
+    }
+
+    .summary-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      text-align: center;
+    }
+
+
+    .diagram {
+      display: grid;
+      gap: 18px;
+      margin: 32px 0;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-medium);
+      background: #fbfcfe;
+    }
+
+    .diagram-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .diagram-node {
+      min-width: 150px;
+      padding: 16px 18px;
+      border: 1px solid #cfd8e3;
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 5px 14px rgba(15, 23, 42, 0.06);
+      text-align: center;
+    }
+
+    .diagram-node.primary {
+      border-color: #a9c1ff;
+      background: var(--accent-soft);
+    }
+
+    .diagram-node.secondary {
+      background: var(--surface-soft);
+    }
+
+    .diagram-title {
+      display: block;
+      color: #1f2937;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .diagram-subtitle {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .diagram-arrow {
+      color: var(--accent);
+      font-size: 25px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .diagram-arrow.vertical {
+      width: 100%;
+      text-align: center;
+    }
+
+    .diagram-branch {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .diagram-branch.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .diagram-label {
+      margin: -4px 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .diagram-stack {
+      display: grid;
+      justify-items: center;
+      gap: 12px;
+    }
+
+    @media (max-width: 720px) {
+      body {
+        font-size: 16px;
+      }
+
+      .page {
+        width: min(100% - 20px, 880px);
+        padding-top: 20px;
+      }
+
+      .hero,
+      .content {
+        padding: 30px 22px;
+      }
+
+      .hero::after {
+        display: none;
+      }
+
+      .hero-description {
+        font-size: 17px;
+      }
+
+      section + section {
+        margin-top: 58px;
+      }
+
+      h2 {
+        font-size: 26px;
+      }
+
+      .assumption-grid,
+      .concept-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram {
+        padding: 22px 16px;
+      }
+
+      .diagram-row {
+        flex-direction: column;
+      }
+
+      .diagram-arrow:not(.vertical) {
+        transform: rotate(90deg);
+      }
+
+      .diagram-branch,
+      .diagram-branch.two {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram-node {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .plus {
+        min-height: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+<main class="page">
+<header class="hero">
+<div class="eyebrow">AI · Future of Work</div>
+<h1>AI 시대,<br/>개발자의 업은 무엇인가</h1>
+<p class="hero-description">코딩과 실행을 AI에게 위임할 수 있는 시대. 그렇다면 인간에게 끝까지 남는 역할은 무엇일까? 방향 설정, 문제 정의, 판단, 정렬, 책임을 중심으로 우리 업의 본질을 다시 정리해 보았다.</p>
+<div aria-label="게시글 태그" class="hero-meta">
+<span class="tag">AI Agent</span><span class="tag">Future of Work</span><span class="tag">Developer</span><span class="tag">Human Role</span>
+</div>
+</header>
+<article class="content">
+<section>
+<h2>1. 질문을 다시 정의하기</h2>
+<p class="lead">AI가 발전할수록 중요한 질문은 <strong>“AI가 무엇을 못하는가?”</strong>가 아니라 <strong>“AI에게 맡기면 안 되는 최종 판단과 책임은 무엇인가?”</strong>로 바뀐다.</p>
+<p>코드 작성, 문서 작성, 요구사항 정리, 테스트 케이스 생성, 로그 분석, 일정 계산처럼 지금까지 사람이 직접 수행했던 많은 업무는 충분한 Context와 Tool, 검증 체계가 갖춰지면 AI Agent에게 상당 부분 위임할 수 있다.</p>
+<div class="highlight">인간의 업은 단순히 일을 수행하는 것이 아니라, <strong>무엇을 왜 해야 하는지 결정하고 그 결과에 책임지는 것</strong>에 더 가깝다.</div>
+</section>
+<section>
+<h2>2. 무엇까지 AI에게 위임할 수 있을까?</h2>
+<div class="concept-grid">
+<div class="card"><div class="card-number">01</div><h3>Implementation</h3><p>코드 작성, 리팩터링, 테스트, 문서화처럼 명확한 입력과 산출물이 있는 실행 업무.</p></div>
+<div class="card"><div class="card-number">02</div><h3>Analysis</h3><p>로그 분석, 데이터 요약, 원인 후보 도출처럼 대량의 정보를 읽고 패턴을 찾는 업무.</p></div>
+<div class="card"><div class="card-number">03</div><h3>Planning</h3><p>일정 초안, 작업 분해, 리스크 후보와 대안 작성 등 의사결정을 보조하는 업무.</p></div>
+<div class="card"><div class="card-number">04</div><h3>Operation</h3><p>모니터링, 이상 탐지, 정해진 정책에 따른 복구와 반복적인 운영 절차.</p></div>
+</div>
+<div class="note"><strong>핵심</strong><br/>실행뿐 아니라 설계·리뷰·계획의 일부도 위임될 수 있다. 그래서 인간의 차별점을 “AI가 아직 못하는 작업”에서 찾으면 기술 발전에 따라 계속 흔들린다.</div>
+</section>
+<section>
+<h2>3. 인간에게 남는 5가지 역할</h2>
+<div class="concept-grid">
+<div class="card"><div class="card-number">01</div><h3>Direction</h3><p><strong>왜 이것을 해야 하는가?</strong><br/>주어진 목표를 최적화하기 전에 목표 자체가 올바른지 질문하고 방향을 정한다.</p></div>
+<div class="card"><div class="card-number">02</div><h3>Problem Framing</h3><p><strong>진짜 풀어야 할 문제는 무엇인가?</strong><br/>솔루션부터 만들지 않고 현실의 문제를 발견하고 다시 정의한다.</p></div>
+<div class="card"><div class="card-number">03</div><h3>Judgment</h3><p><strong>무엇을 선택하고 포기할 것인가?</strong><br/>품질·속도, 비용·안정성처럼 정답 없는 Trade-off를 판단한다.</p></div>
+<div class="card"><div class="card-number">04</div><h3>Alignment</h3><p><strong>어떻게 함께 움직일 것인가?</strong><br/>서로 다른 이해관계를 가진 사람과 조직을 하나의 목적 아래 정렬한다.</p></div>
+<div class="card"><div class="card-number">05</div><h3>Accountability</h3><p><strong>결과는 누가 책임지는가?</strong><br/>실행을 AI에 위임하더라도 중요한 결정과 결과에 대한 책임을 가진다.</p></div>
+</div>
+</section>
+<section>
+<h2>4. 구조는 어떻게 바뀌는가?</h2>
+<p>기존 소프트웨어 개발에서는 사람이 직접 코드를 통해 시스템을 만드는 구조가 중심이었다.</p>
+<div aria-label="기존 개발 구조" class="diagram"><div class="diagram-row"><div class="diagram-node primary"><span class="diagram-title">Human</span><span class="diagram-subtitle">직접 실행</span></div><div class="diagram-arrow">→</div><div class="diagram-node"><span class="diagram-title">Code</span></div><div class="diagram-arrow">→</div><div class="diagram-node secondary"><span class="diagram-title">System</span></div></div></div>
+<p>AI Agent 시대에는 인간이 실행 과정에서 한 단계 위로 이동한다.</p>
+<div aria-label="AI Agent 시대 구조" class="diagram"><div class="diagram-row"><div class="diagram-node primary"><span class="diagram-title">Human</span><span class="diagram-subtitle">방향 · 판단 · 책임</span></div><div class="diagram-arrow">→</div><div class="diagram-node primary"><span class="diagram-title">Goal / Constraint</span><span class="diagram-subtitle">목표 · 경계 · 판단 기준</span></div><div class="diagram-arrow">→</div><div class="diagram-node"><span class="diagram-title">AI Agents</span><span class="diagram-subtitle">계획 · 실행 · 검증</span></div><div class="diagram-arrow">→</div><div class="diagram-node secondary"><span class="diagram-title">System</span></div></div></div>
+<div class="highlight"><strong>Doing → Choosing</strong><br/>사람의 역할은 직접 수행하는 것에서 무엇을 할지 선택하고, 무엇을 위임할지 결정하는 쪽으로 이동한다.</div>
+</section>
+<section>
+<h2>5. 개발자의 역할은 어디로 이동하는가?</h2>
+<div class="table-wrapper"><table><thead><tr><th>기존 중심 역할</th><th>AI 시대에 더 중요해지는 역할</th></tr></thead><tbody>
+<tr><td>Coding</td><td><strong>Problem Framing</strong></td></tr>
+<tr><td>Implementation</td><td><strong>Architecture</strong></td></tr>
+<tr><td>Debugging</td><td><strong>Observability / Evaluation</strong></td></tr>
+<tr><td>Task Execution</td><td><strong>Delegation</strong></td></tr>
+<tr><td>Finding Answers</td><td><strong>Trade-off Judgment</strong></td></tr>
+<tr><td>Individual Productivity</td><td><strong>Human + Agent Orchestration</strong></td></tr>
+</tbody></table></div>
+<div class="warning"><strong>코딩 능력이 필요 없어지는 것은 아니다.</strong><br/>AI가 구현을 더 많이 담당할수록 AI가 만든 시스템이 왜 그렇게 동작하는지 이해하고 결과의 품질을 판단할 수 있는 기술적 깊이가 중요해진다.</div>
+</section>
+<section>
+<h2>6. 우리 업의 본질</h2>
+<div class="summary-box"><h2>Direction · Judgment · Responsibility</h2><p>불확실한 현실의 문제를 구조화하고, <strong>기술과 사람을 조합해 원하는 미래 상태를 만들며</strong>, 그 과정의 중요한 판단과 결과에 책임지는 것.</p><p>AI 시대의 경쟁력은 AI보다 더 많은 일을 수행하는 데 있지 않다. <strong>무엇을 할지 결정하고, 무엇을 AI에게 위임하며, 결과를 판단하고 책임지는 능력</strong>이 더 중요해진다.</p></div>
+</section>
+<section>
+<h2>7. 나의 Work Log</h2>
+<p class="lead">앞으로의 개발자는 단순한 구현자가 아니라 <strong>Human + AI Agent + System을 하나의 목적 아래 설계하고 운영하는 사람</strong>으로 이동해야 한다.</p>
+<div class="note"><strong>학습의 방향</strong><br/>Agent 기술 자체를 익히는 것에서 끝내지 않고, 어떤 업무를 Agent에게 위임할지, 어디에 Human-in-the-loop를 둘지, 어떤 기준으로 결과를 평가하고 책임질지를 함께 설계해야 한다.</div>
+</section>
+</article>
+<footer class="footer"><p>AI Agent 시대에 인간과 개발자의 역할을 고민하며 정리한 Work Log입니다.</p></footer>
+</main>
+</body>
+</html>
